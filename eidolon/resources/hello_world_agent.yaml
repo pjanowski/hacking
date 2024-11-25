@@ -1,0 +1,6 @@
+apiVersion: eidolon/v1
+kind: Agent
+metadata:
+  name: hello_world
+
+spec: "getting_started.hello_world.HelloWorld"

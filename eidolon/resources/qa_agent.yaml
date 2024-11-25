@@ -1,0 +1,9 @@
+apiVersion: eidolon/v1
+kind: Agent
+metadata:
+  name: qa
+
+spec:
+  implementation: "getting_started.qa.QualityAssurance"
+  agent_refs: ["hello_world"]
+  validate_agent: true

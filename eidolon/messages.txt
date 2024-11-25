@@ -1,0 +1,1336 @@
+	messages:
+	- content: You are a friendly greeter who greets people by name while using emojis
+	  role: system
+	- content:
+	  - text: Hi, my name is p3
+	    type: text
+	  role: user
+	- content: "Hello, P3! \U0001F44B\U0001F60A Welcome! How can I assist you today?"
+	  role: assistant
+	- content:
+	  - text: Hi, my name is p4
+	    type: text
+	  role: user
+	model: gpt-4-turbo-preview
+	stream: true
+	temperature: 0.3
+	
+	
+	
+	
+	
+	DEBUG - request content:
+	messages:
+	- content: You are a software documentation expert responsible for maintaining a project
+	    and trying to prove yourself. Your job is to write documentation for the project
+	    including how to use it, what each component does, and the details of each part
+	    of the code. You should write the documentation in a way that is easy to understand
+	    and follow. Remember, you are a professional and you should write the documentation
+	    in a professional manner similar to other documentation you have seen. You have
+	    available tools that can search for code, documentation, and list files. You can
+	    use these tools to help you write the documentation. Think step-by-step about
+	    how you want to create the documentation. Reason about the documentation and call
+	    tools to help you create the documentation.
+	  role: system
+	- content:
+	  - text: Follow the instructions below. Remember to search for code and documentation
+	      to help you write the documentation. How do I create an agent?
+	    type: text
+	  role: user
+	model: gpt-4-turbo-preview
+	stream: true
+	temperature: 0.3
+	tools:
+	- function:
+	    description: Searches for code snippets in the source code
+	    name: AgentsLogicUnit_convo_SearchCode_search
+	    parameters:
+	      $defs:
+	        Input_BodyModel:
+	          properties:
+	            question:
+	              description: The question to search for
+	              title: Question
+	              type: string
+	          required:
+	          - question
+	          title: Input_BodyModel
+	          type: object
+	      properties:
+	        body:
+	          allOf:
+	          - $ref: '#/$defs/Input_BodyModel'
+	          default: null
+	      title: Input
+	      type: object
+	  type: function
+	- function:
+	    description: "List the files in the document store.\n        :return: The response\
+	      \ from the cpu"
+	    name: AgentsLogicUnit_convo_SearchCode_list_files
+	    parameters:
+	      $defs:
+	        Input_BodyModel:
+	          properties: {}
+	          title: Input_BodyModel
+	          type: object
+	      properties:
+	        body:
+	          allOf:
+	          - $ref: '#/$defs/Input_BodyModel'
+	          default: null
+	      title: Input
+	      type: object
+	  type: function
+	- function:
+	    description: Searches for snippets in the documentation
+	    name: AgentsLogicUnit_convo_SearchDocs_search
+	    parameters:
+	      $defs:
+	        Input_BodyModel:
+	          properties:
+	            question:
+	              description: The question to search for
+	              title: Question
+	              type: string
+	          required:
+	          - question
+	          title: Input_BodyModel
+	          type: object
+	      properties:
+	        body:
+	          allOf:
+	          - $ref: '#/$defs/Input_BodyModel'
+	          default: null
+	      title: Input
+	      type: object
+	  type: function
+	- function:
+	    description: "List the files in the document store.\n        :return: The response\
+	      \ from the cpu"
+	    name: AgentsLogicUnit_convo_SearchDocs_list_files
+	    parameters:
+	      $defs:
+	        Input_BodyModel:
+	          properties: {}
+	          title: Input_BodyModel
+	          type: object
+	      properties:
+	        body:
+	          allOf:
+	          - $ref: '#/$defs/Input_BodyModel'
+	          default: null
+	      title: Input
+	      type: object
+	  type: function
+	
+	DEBUG - request content:
+	messages:
+	- content: 'Your response MUST be valid JSON satisfying the following JSON schema:
+	
+	    {"properties": {"questions": {"items": {"type": "string"}, "title": "Questions",
+	    "type": "array"}}, "required": ["questions"], "title": "QuestionList", "type":
+	    "object"}'
+	  role: system
+	- content:
+	  - text: "You are an AI language model assistant. Your task is to generate 3 different\
+	      \ versions of the given user \n    question to retrieve relevant documents from\
+	      \ a vector  database. By generating multiple perspectives on the user question,\
+	      \ \n    your goal is to help the user overcome some of the limitations of distance-based\
+	      \ similarity search. Provide these alternative \n    questions separated by\
+	      \ newlines. Original question: How to create an agent"
+	    type: text
+	  role: user
+	model: gpt-4-turbo-preview
+	response_format:
+	  type: json_object
+	stream: true
+	temperature: 0.3
+	
+	
+	DEBUG - open ai llm object response: {
+	  "questions": [
+	    "What are the steps to develop an agent?",
+	    "Can you guide me through the process of building an agent?",
+	    "What is the procedure for constructing an agent?"
+	  ]
+	}
+
+
+
+DEBUG - request content:
+messages:
+- content: You are a software documentation expert responsible for maintaining a project
+    and trying to prove yourself. Your job is to write documentation for the project
+    including how to use it, what each component does, and the details of each part
+    of the code. You should write the documentation in a way that is easy to understand
+    and follow. Remember, you are a professional and you should write the documentation
+    in a professional manner similar to other documentation you have seen. You have
+    available tools that can search for code, documentation, and list files. You can
+    use these tools to help you write the documentation. Think step-by-step about
+    how you want to create the documentation. Reason about the documentation and call
+    tools to help you create the documentation.
+  role: system
+- content:
+  - text: Follow the instructions below. Remember to search for code and documentation
+      to help you write the documentation. How do I create an agent?
+    type: text
+  role: user
+- content: ''
+  role: assistant
+  tool_calls:
+  - function:
+      arguments: '{''body'': {''question'': ''How to create an agent''}}'
+      name: AgentsLogicUnit_convo_SearchCode_search
+    id: call_RWHJZTjuqXNFGG95vg0SOErl
+    type: function
+  - function:
+      arguments: '{''body'': {''question'': ''How to create an agent''}}'
+      name: AgentsLogicUnit_convo_SearchDocs_search
+    id: call_RYDGJAg9uZrFsrsA6Lk1kOrT
+    type: function
+- content: '[{"id": "cb893b18048c42a38e61eb6cf763c853", "file_name": "agent_program.md",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "## Conclusion\nThe \"Structure of an Agent\" section effectively introduces
+    the various components that make up an agent within the Eidolon platform by discussing
+    the roles and functionalities of each part. We learn about the Agent Code, which
+    contains the logic and\nbehaviors necessary for the agent''s operational functions,
+    as well as the Agent Specification, which outlines the agent''s abilities in a
+    structured YAML file. The AgentCPU, acting as the computational heart, and AgentOS,
+    serving as the foundational\nruntime environment, highlight the technical aspects
+    of how agents perform tasks and manage their states.\n\nSeveral examples illustrate
+    the range of complexity possible within the agent framework, from simple greeting
+    responses with HelloWorld agents to state machines managing different states and
+    transitions. Furthermore, the section delves into the\nspecifics of agent specifications
+    by presenting YAML configurations and explaining the significance of each parameter.\n\nAs
+    a conclusion to this section, we can say that an agent in the Eidolon platform
+    is an intricate and modular construct, capable of varying degrees of autonomy
+    and complexity. Agents are designed to interact seamlessly with users, other agents,
+    and\nthe LLM, underpinned by a well-defined structure that facilitates the development
+    and operation of versatile, task-specific programs within a larger, cohesive system.
+    Whether dealing with simple question-answer interactions or complex, stateful\nconversations,
+    each agent is built with the core principles of modularity, flexibility, and scalability
+    in mind, ensuring their adaptability to a wide array of applications within the
+    platform."}, {"id": "55b8eac302654e789c72b0c376ee9fd2", "file_name": "agent_program.md",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "## Conclusion\nThe \"Structure of an Agent\" section effectively introduces
+    the various components that make up an agent within the Eidolon platform by discussing
+    the roles and functionalities of each part. We learn about the Agent Code, which
+    contains the logic and\nbehaviors necessary for the agent''s operational functions,
+    as well as the Agent Specification, which outlines the agent''s abilities in a
+    structured YAML file. The AgentCPU, acting as the computational heart, and AgentOS,
+    serving as the foundational\nruntime environment, highlight the technical aspects
+    of how agents perform tasks and manage their states.\n\nSeveral examples illustrate
+    the range of complexity possible within the agent framework, from simple greeting
+    responses with HelloWorld agents to state machines managing different states and
+    transitions. Furthermore, the section delves into the\nspecifics of agent specifications
+    by presenting YAML configurations and explaining the significance of each parameter.\n\nAs
+    a conclusion to this section, we can say that an agent in the Eidolon platform
+    is an intricate and modular construct, capable of varying degrees of autonomy
+    and complexity. Agents are designed to interact seamlessly with users, other agents,
+    and\nthe LLM, underpinned by a well-defined structure that facilitates the development
+    and operation of versatile, task-specific programs within a larger, cohesive system.
+    Whether dealing with simple question-answer interactions or complex, stateful\nconversations,
+    each agent is built with the core principles of modularity, flexibility, and scalability
+    in mind, ensuring their adaptability to a wide array of applications within the
+    platform."}, {"id": "f6a66731a90847fc80c56a98e3a46417", "file_name": "agent_program.md",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "This agent starts in state \u2018A\u2019 and provides mechanisms to transition
+    to other specified states, offering an example of how stateful logic can be implemented
+    within an agent.\n\nAgent states are useful for managing the states of a **conversation**
+    between two agents. As mentioned above, each call to a program is assigned a new
+    process_id. This process_id is used to track the state of the conversation between
+    the two agents.\nA great use case for states is a manger agent. A worker agent
+    can use a manager agent to answer questions and perform tasks. The manager agent
+    can maintain state between calls to the worker agent, allowing it to manage the
+    conversation and the worker agent''s state.\n\nSubsequent calls to an agent are
+    made to an **action** defined on the agent. Action methods are decorated with
+    `@register_action()`. All calls to actions are made with the process_id of the
+    conversation, allowing the agent to maintain state between calls to the action.\n\nMoving
+    to the concept of a more self-reliant agent, the **AutonomousAgent** makes use
+    of an `AgentCPU` to process inputs and engage in autonomous interactions:\n\n```python\nclass
+    AutonomousAgent(Agent):\n    @register_program()\n    @register_action(\"idle\")\n    async
+    def converse(\n        self, process_id, question: Annotated[str, Body(description=\"A
+    question\", embed=True)]\n    ) -> AgentState[IdleStateRepresentation]:\n        thread
+    = await self.cpu.main_thread(process_id)\n        response = await thread.schedule_request(\n            [UserTextCPUMessage(prompt=question)],
+    IdleStateRepresentation.model_json_schema()\n        )\n        return AgentState(name=\"idle\",
+    data=IdleStateRepresentation(**response))\n```\n\nHere, the **AutonomousAgent**
+    leverages the computational capabilities of an AgentCPU to answer questions. The
+    `AgentCPU` is responsible for interactions with an LLM, allowing the agent to
+    perform complex language processing tasks.\nNotice how\n\nAs we ascend the complexity
+    ladder, agents are built to handle more autonomy and computational tasks, ultimately
+    enabling a wide span of potential applications within the Eidolon ecosystem. From
+    the simplistic to the intricate, the agents authored\n\n## Specification and Runtime
+    Code\nWe''ve already seen how agents are defined in code, but let''s see how they
+    manifest themselves at configuration time in YAML. Here is the configuration for
+    the **HelloWorld** agent:\n\n```yaml\napiVersion: eidolon/v1\nkind: Agent\nmetadata:\n  name:
+    HelloWorld\n\nimplementation: \"eidolon_examples.hello_world.HelloWorld.HelloWorld\"\n```\n\nAs
+    you can see, this is the simplest form of an agent declaration. Notice the **kind**
+    is set to **Agent**. This is the most basic type of agent, and it is used to define
+    agents that implement all features on their own.\nThe **implementation** field
+    points to the class that implements the agent. This class must be a subclass of
+    `Agent` and must implement at least one program.\n\nThe **HelloWorld** agent is
+    a good example of an agent that does not require any additional configuration.
+    It is a self-contained agent that does not require any additional resources to
+    operate.\nHowever, most agents require some form of configuration to operate.
+    This is where the agent specification comes into play. The specification is a
+    YAML file that defines the configuration parameters for an agent.\nFor example,
+    lets look at a simple agent that takes a question and returns a response:\n\n```yaml\napiVersion:
+    eidolon/v1\nkind: GenericAgent\n\nmetadata:\n  name: ExampleGeneric\n\nspec:\n  description:
+    \"This is an example of a generic agent which can be used to create a conversational
+    agent.\"\n  system_prompt: \"You are a machine which follows instructions and
+    returns a summary of your actions.\"\n  user_prompt: \"{{instruction}}\"\n  input_schema:\n    instruction:\n      type:
+    string\n  output_schema: ''str''\n  files: ''single''\n```"}, {"id": "97d7184b46a14ae1ae7a843018c2321c",
+    "file_name": "agent_program.md", "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "## Conclusion\nThe \"Structure of an Agent\" section effectively introduces
+    the various components that make up an agent within the Eidolon platform by discussing
+    the roles and functionalities of each part. We learn about the Agent Code, which
+    contains the logic and\nbehaviors necessary for the agent''s operational functions,
+    as well as the Agent Specification, which outlines the agent''s abilities in a
+    structured YAML file. The AgentCPU, acting as the computational heart, and AgentOS,
+    serving as the foundational\nruntime environment, highlight the technical aspects
+    of how agents perform tasks and manage their states.\n\nSeveral examples illustrate
+    the range of complexity possible within the agent framework, from simple greeting
+    responses with HelloWorld agents to state machines managing different states and
+    transitions. Furthermore, the section delves into the\nspecifics of agent specifications
+    by presenting YAML configurations and explaining the significance of each parameter.\n\nAs
+    a conclusion to this section, we can say that an agent in the Eidolon platform
+    is an intricate and modular construct, capable of varying degrees of autonomy
+    and complexity. Agents are designed to interact seamlessly with users, other agents,
+    and\nthe LLM, underpinned by a well-defined structure that facilitates the development
+    and operation of versatile, task-specific programs within a larger, cohesive system.
+    Whether dealing with simple question-answer interactions or complex, stateful\nconversations,
+    each agent is built with the core principles of modularity, flexibility, and scalability
+    in mind, ensuring their adaptability to a wide array of applications within the
+    platform."}, {"id": "8d84d986fb5f4624b0e015968c5265d0", "file_name": "agent_program.md",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "This agent starts in state \u2018A\u2019 and provides mechanisms to transition
+    to other specified states, offering an example of how stateful logic can be implemented
+    within an agent.\n\nAgent states are useful for managing the states of a **conversation**
+    between two agents. As mentioned above, each call to a program is assigned a new
+    process_id. This process_id is used to track the state of the conversation between
+    the two agents.\nA great use case for states is a manger agent. A worker agent
+    can use a manager agent to answer questions and perform tasks. The manager agent
+    can maintain state between calls to the worker agent, allowing it to manage the
+    conversation and the worker agent''s state.\n\nSubsequent calls to an agent are
+    made to an **action** defined on the agent. Action methods are decorated with
+    `@register_action()`. All calls to actions are made with the process_id of the
+    conversation, allowing the agent to maintain state between calls to the action.\n\nMoving
+    to the concept of a more self-reliant agent, the **AutonomousAgent** makes use
+    of an `AgentCPU` to process inputs and engage in autonomous interactions:\n\n```python\nclass
+    AutonomousAgent(Agent):\n    @register_program()\n    @register_action(\"idle\")\n    async
+    def converse(\n        self, process_id, question: Annotated[str, Body(description=\"A
+    question\", embed=True)]\n    ) -> AgentState[IdleStateRepresentation]:\n        thread
+    = await self.cpu.main_thread(process_id)\n        response = await thread.schedule_request(\n            [UserTextCPUMessage(prompt=question)],
+    IdleStateRepresentation.model_json_schema()\n        )\n        return AgentState(name=\"idle\",
+    data=IdleStateRepresentation(**response))\n```\n\nHere, the **AutonomousAgent**
+    leverages the computational capabilities of an AgentCPU to answer questions. The
+    `AgentCPU` is responsible for interactions with an LLM, allowing the agent to
+    perform complex language processing tasks.\nNotice how\n\nAs we ascend the complexity
+    ladder, agents are built to handle more autonomy and computational tasks, ultimately
+    enabling a wide span of potential applications within the Eidolon ecosystem. From
+    the simplistic to the intricate, the agents authored\n\n## Specification and Runtime
+    Code\nWe''ve already seen how agents are defined in code, but let''s see how they
+    manifest themselves at configuration time in YAML. Here is the configuration for
+    the **HelloWorld** agent:\n\n```yaml\napiVersion: eidolon/v1\nkind: Agent\nmetadata:\n  name:
+    HelloWorld\n\nimplementation: \"eidolon_examples.hello_world.HelloWorld.HelloWorld\"\n```\n\nAs
+    you can see, this is the simplest form of an agent declaration. Notice the **kind**
+    is set to **Agent**. This is the most basic type of agent, and it is used to define
+    agents that implement all features on their own.\nThe **implementation** field
+    points to the class that implements the agent. This class must be a subclass of
+    `Agent` and must implement at least one program.\n\nThe **HelloWorld** agent is
+    a good example of an agent that does not require any additional configuration.
+    It is a self-contained agent that does not require any additional resources to
+    operate.\nHowever, most agents require some form of configuration to operate.
+    This is where the agent specification comes into play. The specification is a
+    YAML file that defines the configuration parameters for an agent.\nFor example,
+    lets look at a simple agent that takes a question and returns a response:\n\n```yaml\napiVersion:
+    eidolon/v1\nkind: GenericAgent\n\nmetadata:\n  name: ExampleGeneric\n\nspec:\n  description:
+    \"This is an example of a generic agent which can be used to create a conversational
+    agent.\"\n  system_prompt: \"You are a machine which follows instructions and
+    returns a summary of your actions.\"\n  user_prompt: \"{{instruction}}\"\n  input_schema:\n    instruction:\n      type:
+    string\n  output_schema: ''str''\n  files: ''single''\n```"}, {"id": "f6a28cd1df18413eab86409808cd5274",
+    "file_name": "agent_program.md", "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "## Conclusion\nThe \"Structure of an Agent\" section effectively introduces
+    the various components that make up an agent within the Eidolon platform by discussing
+    the roles and functionalities of each part. We learn about the Agent Code, which
+    contains the logic and\nbehaviors necessary for the agent''s operational functions,
+    as well as the Agent Specification, which outlines the agent''s abilities in a
+    structured YAML file. The AgentCPU, acting as the computational heart, and AgentOS,
+    serving as the foundational\nruntime environment, highlight the technical aspects
+    of how agents perform tasks and manage their states.\n\nSeveral examples illustrate
+    the range of complexity possible within the agent framework, from simple greeting
+    responses with HelloWorld agents to state machines managing different states and
+    transitions. Furthermore, the section delves into the\nspecifics of agent specifications
+    by presenting YAML configurations and explaining the significance of each parameter.\n\nAs
+    a conclusion to this section, we can say that an agent in the Eidolon platform
+    is an intricate and modular construct, capable of varying degrees of autonomy
+    and complexity. Agents are designed to interact seamlessly with users, other agents,
+    and\nthe LLM, underpinned by a well-defined structure that facilitates the development
+    and operation of versatile, task-specific programs within a larger, cohesive system.
+    Whether dealing with simple question-answer interactions or complex, stateful\nconversations,
+    each agent is built with the core principles of modularity, flexibility, and scalability
+    in mind, ensuring their adaptability to a wide array of applications within the
+    platform."}, {"id": "8eabf0d79591497199b31a8e3b2673a5", "file_name": "agent_program.md",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "This agent starts in state \u2018A\u2019 and provides mechanisms to transition
+    to other specified states, offering an example of how stateful logic can be implemented
+    within an agent.\n\nAgent states are useful for managing the states of a **conversation**
+    between two agents. As mentioned above, each call to a program is assigned a new
+    process_id. This process_id is used to track the state of the conversation between
+    the two agents.\nA great use case for states is a manger agent. A worker agent
+    can use a manager agent to answer questions and perform tasks. The manager agent
+    can maintain state between calls to the worker agent, allowing it to manage the
+    conversation and the worker agent''s state.\n\nSubsequent calls to an agent are
+    made to an **action** defined on the agent. Action methods are decorated with
+    `@register_action()`. All calls to actions are made with the process_id of the
+    conversation, allowing the agent to maintain state between calls to the action.\n\nMoving
+    to the concept of a more self-reliant agent, the **AutonomousAgent** makes use
+    of an `AgentCPU` to process inputs and engage in autonomous interactions:\n\n```python\nclass
+    AutonomousAgent(Agent):\n    @register_program()\n    @register_action(\"idle\")\n    async
+    def converse(\n        self, process_id, question: Annotated[str, Body(description=\"A
+    question\", embed=True)]\n    ) -> AgentState[IdleStateRepresentation]:\n        thread
+    = await self.cpu.main_thread(process_id)\n        response = await thread.schedule_request(\n            [UserTextCPUMessage(prompt=question)],
+    IdleStateRepresentation.model_json_schema()\n        )\n        return AgentState(name=\"idle\",
+    data=IdleStateRepresentation(**response))\n```\n\nHere, the **AutonomousAgent**
+    leverages the computational capabilities of an AgentCPU to answer questions. The
+    `AgentCPU` is responsible for interactions with an LLM, allowing the agent to
+    perform complex language processing tasks.\nNotice how\n\nAs we ascend the complexity
+    ladder, agents are built to handle more autonomy and computational tasks, ultimately
+    enabling a wide span of potential applications within the Eidolon ecosystem. From
+    the simplistic to the intricate, the agents authored\n\n## Specification and Runtime
+    Code\nWe''ve already seen how agents are defined in code, but let''s see how they
+    manifest themselves at configuration time in YAML. Here is the configuration for
+    the **HelloWorld** agent:\n\n```yaml\napiVersion: eidolon/v1\nkind: Agent\nmetadata:\n  name:
+    HelloWorld\n\nimplementation: \"eidolon_examples.hello_world.HelloWorld.HelloWorld\"\n```\n\nAs
+    you can see, this is the simplest form of an agent declaration. Notice the **kind**
+    is set to **Agent**. This is the most basic type of agent, and it is used to define
+    agents that implement all features on their own.\nThe **implementation** field
+    points to the class that implements the agent. This class must be a subclass of
+    `Agent` and must implement at least one program.\n\nThe **HelloWorld** agent is
+    a good example of an agent that does not require any additional configuration.
+    It is a self-contained agent that does not require any additional resources to
+    operate.\nHowever, most agents require some form of configuration to operate.
+    This is where the agent specification comes into play. The specification is a
+    YAML file that defines the configuration parameters for an agent.\nFor example,
+    lets look at a simple agent that takes a question and returns a response:\n\n```yaml\napiVersion:
+    eidolon/v1\nkind: GenericAgent\n\nmetadata:\n  name: ExampleGeneric\n\nspec:\n  description:
+    \"This is an example of a generic agent which can be used to create a conversational
+    agent.\"\n  system_prompt: \"You are a machine which follows instructions and
+    returns a summary of your actions.\"\n  user_prompt: \"{{instruction}}\"\n  input_schema:\n    instruction:\n      type:
+    string\n  output_schema: ''str''\n  files: ''single''\n```"}, {"id": "7fa1a1e7e64243fa83f3bb20658f79ea",
+    "file_name": "conclusion.md", "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/conclusion.md",
+    "text": "This agent starts in state \u2018A\u2019 and provides mechanisms to transition
+    to other specified states, offering an example of how stateful logic can be implemented
+    within an agent.\n\nAgent states are useful for managing the states of a **conversation**
+    between two agents. As mentioned above, each call to a program is assigned a new
+    process_id. This process_id is used to track the state of the conversation between
+    the two agents.\nA great use case for states is a manger agent. A worker agent
+    can use a manager agent to answer questions and perform tasks. The manager agent
+    can maintain state between calls to the worker agent, allowing it to manage the
+    conversation and the worker agent''s state.\n\nSubsequent calls to an agent are
+    made to an **action** defined on the agent. Action methods are decorated with
+    `@register_action()`. All calls to actions are made with the process_id of the
+    conversation, allowing the agent to maintain state between calls to the action.\n\nMoving
+    to the concept of a more self-reliant agent, the **AutonomousAgent** makes use
+    of an `AgentCPU` to process inputs and engage in autonomous interactions:\n\n```python\nclass
+    AutonomousAgent(Agent):\n    @register_program()\n    @register_action(\"idle\")\n    async
+    def converse(\n        self, process_id, question: Annotated[str, Body(description=\"A
+    question\", embed=True)]\n    ) -> AgentState[IdleStateRepresentation]:\n        thread
+    = await self.cpu.main_thread(process_id)\n        response = await thread.schedule_request(\n            [UserTextCPUMessage(prompt=question)],
+    IdleStateRepresentation.model_json_schema()\n        )\n        return AgentState(name=\"idle\",
+    data=IdleStateRepresentation(**response))\n```\n\nHere, the **AutonomousAgent**
+    leverages the computational capabilities of an AgentCPU to answer questions. The
+    `AgentCPU` is responsible for interactions with an LLM, allowing the agent to
+    perform complex language processing tasks.\nNotice how\n\nAs we ascend the complexity
+    ladder, agents are built to handle more autonomy and computational tasks, ultimately
+    enabling a wide span of potential applications within the Eidolon ecosystem. From
+    the simplistic to the intricate, the agents authored\n\n## Specification and Runtime
+    Code\nWe''ve already seen how agents are defined in code, but let''s see how they
+    manifest themselves at configuration time in YAML. Here is the configuration for
+    the **HelloWorld** agent:\n\n```yaml\napiVersion: eidolon/v1\nkind: Agent\nmetadata:\n  name:
+    HelloWorld\n\nimplementation: \"eidolon_examples.hello_world.HelloWorld.HelloWorld\"\n```\n\nAs
+    you can see, this is the simplest form of an agent declaration. Notice the **kind**
+    is set to **Agent**. This is the most basic type of agent, and it is used to define
+    agents that implement all features on their own.\nThe **implementation** field
+    points to the class that implements the agent. This class must be a subclass of
+    `Agent` and must implement at least one program.\n\nThe **HelloWorld** agent is
+    a good example of an agent that does not require any additional configuration.
+    It is a self-contained agent that does not require any additional resources to
+    operate.\nHowever, most agents require some form of configuration to operate.
+    This is where the agent specification comes into play. The specification is a
+    YAML file that defines the configuration parameters for an agent.\nFor example,
+    lets look at a simple agent that takes a question and returns a response:\n\n```yaml\napiVersion:
+    eidolon/v1\nkind: GenericAgent\n\nmetadata:\n  name: ExampleGeneric\n\nspec:\n  description:
+    \"This is an example of a generic agent which can be used to create a conversational
+    agent.\"\n  system_prompt: \"You are a machine which follows instructions and
+    returns a summary of your actions.\"\n  user_prompt: \"{{instruction}}\"\n  input_schema:\n    instruction:\n      type:
+    string\n  output_schema: ''str''\n  files: ''single''\n```"}, {"id": "dd684b7bb7d14a44b43c06cb94806159",
+    "file_name": "agent_program.md", "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "In conclusion, the Eidolon framework provides a sophisticated, modular,
+    and scalable architecture for developing and managing software agents. Its emphasis
+    on components like AgentMachine, AgentPrograms, and AgentCPU, coupled with a strong
+    focus on modularity, communication, and interoperability, positions it as a versatile
+    tool for building complex agent-based systems. The framework''s ability to integrate
+    with external models and services further enhances its applicability in diverse
+    operational contexts."}, {"id": "00d9e269e467495d8a9d07493993ffbf", "file_name":
+    "agent_program.md", "file_path": "/home/pjanowski/code/eidolon/examples/../docs/src/content/docs/architecture/agent_program.md",
+    "text": "---\ntitle: Structure of an Agent\ndescription: An overview of the AgentProgram
+    within Eidolon.\n---\n\n## What is an agent?\n\nAn LLM agent is:\n\n*An AI system
+    that goes beyond simple text production. It uses a large language model (LLM)
+    as its central computational engine, allowing it to carry on conversations, do
+    tasks, reason, and display a degree of autonomy.*\n\nIn fact a software agent,
+    in general terms, is:\n\n*A computer program that acts for a user or another program
+    in a relationship of agency.*\n\nWithin the framework of the Eidolon platform,
+    an Autonomous agent is a **loosely coupled program that performs a specific task**.
+    An agent can act in concert with other agents, in a relationship of agency, to
+    perform a more complex task. An agent might assume an overseer role for another
+    agent, e.g. a QA agent or a manager agent, it could be a planning agent, or it
+    could just be a skilled worker agent that performs a single task.\n\nThe construct
+    of an agent is composed of the following elements:\n\n- **Agent Code**: The executable
+    part of the agent that contains the logic and behaviors necessary for performing
+    the agent''s functions.\n\n- **Agent Specification**: A structured definition
+    that defines the agent''s abilities. The specification is defined in a YAML file
+    and is used to configure the agent''s behavior and communication schemata.\n\n-
+    **AgentCPU**: The computational heart of an agent, analogous to a CPU in a computer.
+    It coordinates all interaction with an LLM and other agents, enabling the seamless
+    flow of data and instructions within the agent.\n\n- **AgentOS**: The operating
+    system for agents, providing the foundational runtime environment, including process
+    management and memory management. It supports the various agent programs running
+    within it.\n\nAgents on the Eidolon platform are characterized by their ability
+    to maintain and operate within various states, seamlessly transitioning between
+    them to execute tasks and interact with users or other processes.\n\n### Examples
+    of Agents on Eidolon\n\nThe simplest form of an agent is epitomized by the **HelloWorld**
+    agent:\n\n```python\nclass HelloWorld:\n    @register_program()\n    async def
+    execute(self, name: str) -> IdleStateRepresentation:\n        return IdleStateRepresentation(welcome_message=f\"Hello,
+    World {name}!\")\n```\n\nThis agent takes a user-provided name and responds with
+    a greeting\u2014a basic demonstration of agent functionality and an entry point
+    for understanding how Eidolon agents operate.\n\nNotice the use of the `@register_program()`
+    decorator, which is used to register the `execute` method as the agent''s program.
+    This decorator is used to register all agent programs, the starting point for
+    any conversation.\n\nCalls to methods decorated with `@register_program()` are
+    assigned a new **process_id** and are executed in a new process. The process_id
+    allows the agent to maintain state between calls to the program, and to execute
+    multiple programs concurrently.\n\nTransitioning to a more complex scenario, the
+    **StateMachine** demonstrates an agent that manages different states, executing
+    transitions and tasks based on input and processing rules:\n\n```python\nclass
+    StateMachine:\n    @register_program()\n    async def execute(self) -> AgentState[str]:\n        #
+    ...\n  \n    @register_action(\"a\", \"b\")\n    async def transform(self, requested_state:
+    str) -> AgentState[Union[AState, BState, CState]]:\n        # ...\n```\n\nThis
+    agent starts in state \u2018A\u2019 and provides mechanisms to transition to other
+    specified states, offering an example of how stateful logic can be implemented
+    within an agent."}]'
+  role: tool
+  tool_call_id: call_RYDGJAg9uZrFsrsA6Lk1kOrT
+- content: '[{"id": "9431e4a5861b472d9056dab0fdaca2f4", "file_name": "agent_machine.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_machine.py",
+    "text": "class AgentMachine(Specable[MachineSpec]):\n    memory: AgentMemory\n    security_manager:
+    SecurityManager\n    agent_controllers: List[AgentController]\n    app: Optional[FastAPI]\n\n    def
+    __init__(self, spec: MachineSpec):\n        super().__init__(spec)\n        agents
+    = {}\n        for name, r in AgentOS.get_resources(AgentResource).items():\n            with
+    _error_wrapper(r):\n                agents[name] = r.spec.instantiate()\n\n        self.memory
+    = self.spec.get_agent_memory()\n        self.agent_controllers = [AgentController(name,
+    agent) for name, agent in agents.items()]\n        self.app = None\n        self.security_manager
+    = self.spec.security_manager.instantiate()\n\n    async def start(self, app):\n        if
+    self.app:\n            raise Exception(\"Machine already started\")\n        for
+    program in self.agent_controllers:\n            await program.start(app)\n        await
+    self.memory.start()\n        self.app = app\n\n    async def stop(self):\n        if
+    self.app:\n            for program in self.agent_controllers:\n                await
+    program.stop(self.app)\n            await self.memory.stop()\n            self.app
+    = None"}, {"id": "99a93ad924f346658177e735aebf2634", "file_name": "agent_machine.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_machine.py",
+    "text": "import asyncio\nfrom typing import Annotated, List\nfrom urllib.parse
+    import urlparse\n\nfrom fastapi import Body\nfrom pydantic import BaseModel, Field,
+    model_validator\n\nfrom eidolon_ai_sdk.agent.agent import register_program, AgentState\nfrom
+    eidolon_ai_sdk.agent.doc_manager.document_manager import DocumentManager\nfrom
+    eidolon_ai_sdk.agent.doc_manager.loaders.filesystem_loader import FilesystemLoader\nfrom
+    eidolon_ai_sdk.agent.retriever_agent.document_reranker import DocumentReranker\nfrom
+    eidolon_ai_sdk.agent.retriever_agent.question_transformer import QuestionTransformer\nfrom
+    eidolon_ai_sdk.agent_os import AgentOS\nfrom eidolon_ai_sdk.system.fn_handler
+    import FnHandler\nfrom eidolon_ai_sdk.system.reference_model import Specable,
+    AnnotatedReference, Reference\nfrom eidolon_ai_sdk.util.class_utils import fqn\n\n\n#
+    Code for: def make_description(agent: object, _handler: FnHandler) -> str:\n\n\n#
+    Code for: class RetrieverAgentSpec(BaseModel):\n\n\n# Code for: class DocSummary(BaseModel):\n\n\n#
+    Code for: class RetrieverAgent(Specable[RetrieverAgentSpec]):"}, {"id": "6c7fbc26993b429b8b534fd3b67d5ba4",
+    "file_name": "agent_creator.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/bin/agent_creator.py",
+    "text": "import asyncio\nfrom typing import Annotated, List\nfrom urllib.parse
+    import urlparse\n\nfrom fastapi import Body\nfrom pydantic import BaseModel, Field,
+    model_validator\n\nfrom eidolon_ai_sdk.agent.agent import register_program, AgentState\nfrom
+    eidolon_ai_sdk.agent.doc_manager.document_manager import DocumentManager\nfrom
+    eidolon_ai_sdk.agent.doc_manager.loaders.filesystem_loader import FilesystemLoader\nfrom
+    eidolon_ai_sdk.agent.retriever_agent.document_reranker import DocumentReranker\nfrom
+    eidolon_ai_sdk.agent.retriever_agent.question_transformer import QuestionTransformer\nfrom
+    eidolon_ai_sdk.agent_os import AgentOS\nfrom eidolon_ai_sdk.system.fn_handler
+    import FnHandler\nfrom eidolon_ai_sdk.system.reference_model import Specable,
+    AnnotatedReference, Reference\nfrom eidolon_ai_sdk.util.class_utils import fqn\n\n\n#
+    Code for: def make_description(agent: object, _handler: FnHandler) -> str:\n\n\n#
+    Code for: class RetrieverAgentSpec(BaseModel):\n\n\n# Code for: class DocSummary(BaseModel):\n\n\n#
+    Code for: class RetrieverAgent(Specable[RetrieverAgentSpec]):"}, {"id": "463e71e7b5f7489083f84e1f6b5236bd",
+    "file_name": "agent_creator.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/bin/agent_creator.py",
+    "text": "import asyncio\nfrom typing import Annotated, List\nfrom urllib.parse
+    import urlparse\n\nfrom fastapi import Body\nfrom pydantic import BaseModel, Field,
+    model_validator\n\nfrom eidolon_ai_sdk.agent.agent import register_program, AgentState\nfrom
+    eidolon_ai_sdk.agent.doc_manager.document_manager import DocumentManager\nfrom
+    eidolon_ai_sdk.agent.doc_manager.loaders.filesystem_loader import FilesystemLoader\nfrom
+    eidolon_ai_sdk.agent.retriever_agent.document_reranker import DocumentReranker\nfrom
+    eidolon_ai_sdk.agent.retriever_agent.question_transformer import QuestionTransformer\nfrom
+    eidolon_ai_sdk.agent_os import AgentOS\nfrom eidolon_ai_sdk.system.fn_handler
+    import FnHandler\nfrom eidolon_ai_sdk.system.reference_model import Specable,
+    AnnotatedReference, Reference\nfrom eidolon_ai_sdk.util.class_utils import fqn\n\n\n#
+    Code for: def make_description(agent: object, _handler: FnHandler) -> str:\n\n\n#
+    Code for: class RetrieverAgentSpec(BaseModel):\n\n\n# Code for: class DocSummary(BaseModel):\n\n\n#
+    Code for: class RetrieverAgent(Specable[RetrieverAgentSpec]):"}, {"id": "4da281a985ac4d6e962a4a6934ec134a",
+    "file_name": "agent_controller.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_controller.py",
+    "text": "class AgentsLogicUnitSpec(BaseModel):\n    tool_prefix: str = \"convo\"\n    agents:
+    List[str]"}, {"id": "b8a5ecb7a6594fd8b0ddd14961f165b4", "file_name": "agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class AgentsLogicUnitSpec(BaseModel):\n    tool_prefix: str = \"convo\"\n    agents:
+    List[str]"}, {"id": "d63eb59f463e492ab79ed19cb4ca8af5", "file_name": "agents_logic_unit.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "class AgentsLogicUnitSpec(BaseModel):\n    tool_prefix: str = \"convo\"\n    agents:
+    List[str]"}, {"id": "c25375d208a644c2bc474f9986a220be", "file_name": "agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class GenericAgent(Agent, Specable[GenericAgentSpec]):\n    @register_program(\n        input_model=make_input_schema,\n        output_model=make_output_schema,\n        description=make_description,\n    )\n    async
+    def question(self, process_id, **kwargs) -> AgentState[Any]:\n        body = dict(datetime_iso=datetime.now().isoformat())\n        body.update(kwargs.get(\"body\")
+    or {})\n        body = to_jsonable_python(body)\n        files = kwargs.get(\"file\",
+    [])\n        if not isinstance(files, list):\n            files = [files]\n\n        env
+    = Environment(undefined=StrictUndefined)\n        t = await self.cpu.main_thread(process_id)\n        await
+    t.set_boot_messages(\n            prompts=[SystemCPUMessage(prompt=(env.from_string(self.spec.system_prompt).render(**body)))],\n        )\n\n        #
+    pull out any kwargs that are UploadFile and put them in a list of UserImageCPUMessage\n        image_messages
+    = []\n        for file in files:\n            if file:\n                image_messages.append(ImageCPUMessage(image=file.file,
+    prompt=file.filename))\n\n        response = t.stream_request(\n            prompts=[\n                UserTextCPUMessage(prompt=(env.from_string(self.spec.user_prompt).render(**body))),\n                *image_messages,\n            ],\n            output_format=self.spec.output_schema,\n        )\n        async
+    for event in response:\n            yield event\n        yield AgentStateEvent(state=\"idle\")\n\n    @register_action(\"idle\",
+    \"http_error\")\n    async def respond(self, process_id, statement: Annotated[str,
+    Body(embed=True)]) -> AgentState[Any]:\n        t = await self.cpu.main_thread(process_id)\n        response
+    = await t.run_request([UserTextCPUMessage(prompt=statement)], self.spec.output_schema)\n        return
+    AgentState(name=\"idle\", data=response)"}, {"id": "ceadd0e768d24f9b8070550f16234952",
+    "file_name": "agent.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class SimpleAgentSpec(AgentSpec):\n    description: Optional[str] = None\n    system_prompt:
+    str = \"You are a helpful assistant\"\n    actions: List[ActionDefinition] = [ActionDefinition()]"},
+    {"id": "e5a52124d06f40e38a2fd5d7cc9ccf7a", "file_name": "retriever_agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/retriever_agent/retriever_agent.py",
+    "text": "class GenericAgent(Agent, Specable[GenericAgentSpec]):\n    @register_program(\n        input_model=make_input_schema,\n        output_model=make_output_schema,\n        description=make_description,\n    )\n    async
+    def question(self, process_id, **kwargs) -> AgentState[Any]:\n        body = dict(datetime_iso=datetime.now().isoformat())\n        body.update(kwargs.get(\"body\")
+    or {})\n        body = to_jsonable_python(body)\n        files = kwargs.get(\"file\",
+    [])\n        if not isinstance(files, list):\n            files = [files]\n\n        env
+    = Environment(undefined=StrictUndefined)\n        t = await self.cpu.main_thread(process_id)\n        await
+    t.set_boot_messages(\n            prompts=[SystemCPUMessage(prompt=(env.from_string(self.spec.system_prompt).render(**body)))],\n        )\n\n        #
+    pull out any kwargs that are UploadFile and put them in a list of UserImageCPUMessage\n        image_messages
+    = []\n        for file in files:\n            if file:\n                image_messages.append(ImageCPUMessage(image=file.file,
+    prompt=file.filename))\n\n        response = t.stream_request(\n            prompts=[\n                UserTextCPUMessage(prompt=(env.from_string(self.spec.user_prompt).render(**body))),\n                *image_messages,\n            ],\n            output_format=self.spec.output_schema,\n        )\n        async
+    for event in response:\n            yield event\n        yield AgentStateEvent(state=\"idle\")\n\n    @register_action(\"idle\",
+    \"http_error\")\n    async def respond(self, process_id, statement: Annotated[str,
+    Body(embed=True)]) -> AgentState[Any]:\n        t = await self.cpu.main_thread(process_id)\n        response
+    = await t.run_request([UserTextCPUMessage(prompt=statement)], self.spec.output_schema)\n        return
+    AgentState(name=\"idle\", data=response)"}, {"id": "9c335a82f963466da657f091d76d3c0c",
+    "file_name": "simple_agent.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/simple_agent.py",
+    "text": "class SimpleAgentSpec(AgentSpec):\n    description: Optional[str] = None\n    system_prompt:
+    str = \"You are a helpful assistant\"\n    actions: List[ActionDefinition] = [ActionDefinition()]"},
+    {"id": "9206e164e7d64fee986f2516ea04b144", "file_name": "agent_controller.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_controller.py",
+    "text": "class GenericAgent(Agent, Specable[GenericAgentSpec]):\n    @register_program(\n        input_model=make_input_schema,\n        output_model=make_output_schema,\n        description=make_description,\n    )\n    async
+    def question(self, process_id, **kwargs) -> AgentState[Any]:\n        body = dict(datetime_iso=datetime.now().isoformat())\n        body.update(kwargs.get(\"body\")
+    or {})\n        body = to_jsonable_python(body)\n        files = kwargs.get(\"file\",
+    [])\n        if not isinstance(files, list):\n            files = [files]\n\n        env
+    = Environment(undefined=StrictUndefined)\n        t = await self.cpu.main_thread(process_id)\n        await
+    t.set_boot_messages(\n            prompts=[SystemCPUMessage(prompt=(env.from_string(self.spec.system_prompt).render(**body)))],\n        )\n\n        #
+    pull out any kwargs that are UploadFile and put them in a list of UserImageCPUMessage\n        image_messages
+    = []\n        for file in files:\n            if file:\n                image_messages.append(ImageCPUMessage(image=file.file,
+    prompt=file.filename))\n\n        response = t.stream_request(\n            prompts=[\n                UserTextCPUMessage(prompt=(env.from_string(self.spec.user_prompt).render(**body))),\n                *image_messages,\n            ],\n            output_format=self.spec.output_schema,\n        )\n        async
+    for event in response:\n            yield event\n        yield AgentStateEvent(state=\"idle\")\n\n    @register_action(\"idle\",
+    \"http_error\")\n    async def respond(self, process_id, statement: Annotated[str,
+    Body(embed=True)]) -> AgentState[Any]:\n        t = await self.cpu.main_thread(process_id)\n        response
+    = await t.run_request([UserTextCPUMessage(prompt=statement)], self.spec.output_schema)\n        return
+    AgentState(name=\"idle\", data=response)"}, {"id": "ee6140fa622a43b19eb5cc563a850076",
+    "file_name": "agents_logic_unit.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "class SimpleAgentSpec(AgentSpec):\n    description: Optional[str] = None\n    system_prompt:
+    str = \"You are a helpful assistant\"\n    actions: List[ActionDefinition] = [ActionDefinition()]"},
+    {"id": "d2229f7e0fd54cff991d8961557572e7", "file_name": "agent_creator.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/bin/agent_creator.py",
+    "text": "def _build_tool_def(self, agent, operation, name, endpoint_schema, tool_call):\n        description
+    = self._description(endpoint_schema, name)\n        model = self._body_model(endpoint_schema,
+    name)\n        return FnHandler(\n            name=name,\n            description=lambda
+    a, b: description,\n            input_model_fn=lambda a, b: model,\n            output_model_fn=lambda
+    a, b: Any,\n            fn=tool_call,\n            extra={\n                \"title\":
+    agent,\n                \"sub_title\": operation,\n                \"agent_call\":
+    True,\n            },\n        )\n\n    @staticmethod\n    def _body_model(endpoint_schema,
+    name):\n        body = endpoint_schema.get(\"requestBody\")\n        if body and
+    \"application/json\" not in body[\"content\"]:\n            raise ValueError(f\"Agent
+    action at {name} does not support application/json\")\n        json_schema = body[\"content\"][\"application/json\"][\"schema\"]
+    if body else dict(type=\"object\", properties={})\n        return schema_to_model(dict(type=\"object\",
+    properties=dict(body=json_schema)), \"Input\")\n\n    @staticmethod\n    def _description(endpoint_schema,
+    name):\n        description = endpoint_schema.get(\"description\", \"\")\n        if
+    not description:\n            logger.warning(f\"Agent program at {name} does not
+    have a description. LLM may not use it properly\")\n        return description\n\n    #
+    needs to be under 64 characters\n    def _name(self, agent, action=\"\", process_id=\"\"):\n        agent
+    = agent[:15]\n        process_id = process_id[:25]\n        process_id = \"_\"
+    + process_id if process_id else \"\"\n        action = action[:15]\n        action
+    = \"_\" + action if action else \"\"\n        return self.spec.tool_prefix + \"_\"
+    + agent + process_id + action\n\n    # todo, this needs to create history record
+    before iterating\n    def _program_tool(self, agent: Agent, program: str, call_context:
+    CallContext):\n        async def fn(_self, body):\n            async for event
+    in RecordAgentResponseIterator(\n                (await agent.create_process()).stream_action(program,
+    body), call_context.process_id, call_context.thread_id\n            ):\n                yield
+    event\n\n        return fn\n\n    # todo, this needs to create history record
+    before iterating\n    def _process_tool(self, agent: Agent, action: str, process_id:
+    str, call_context: CallContext):\n        def fn(_self, body):\n            return
+    RecordAgentResponseIterator(\n                agent.process(process_id).stream_action(action,
+    body), call_context.process_id, call_context.thread_id\n            )\n\n        return
+    fn"}, {"id": "9f0a864d86854b95a40d5c172ecc8866", "file_name": "logic_unit.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/logic_unit.py",
+    "text": "def _build_tool_def(self, agent, operation, name, endpoint_schema, tool_call):\n        description
+    = self._description(endpoint_schema, name)\n        model = self._body_model(endpoint_schema,
+    name)\n        return FnHandler(\n            name=name,\n            description=lambda
+    a, b: description,\n            input_model_fn=lambda a, b: model,\n            output_model_fn=lambda
+    a, b: Any,\n            fn=tool_call,\n            extra={\n                \"title\":
+    agent,\n                \"sub_title\": operation,\n                \"agent_call\":
+    True,\n            },\n        )\n\n    @staticmethod\n    def _body_model(endpoint_schema,
+    name):\n        body = endpoint_schema.get(\"requestBody\")\n        if body and
+    \"application/json\" not in body[\"content\"]:\n            raise ValueError(f\"Agent
+    action at {name} does not support application/json\")\n        json_schema = body[\"content\"][\"application/json\"][\"schema\"]
+    if body else dict(type=\"object\", properties={})\n        return schema_to_model(dict(type=\"object\",
+    properties=dict(body=json_schema)), \"Input\")\n\n    @staticmethod\n    def _description(endpoint_schema,
+    name):\n        description = endpoint_schema.get(\"description\", \"\")\n        if
+    not description:\n            logger.warning(f\"Agent program at {name} does not
+    have a description. LLM may not use it properly\")\n        return description\n\n    #
+    needs to be under 64 characters\n    def _name(self, agent, action=\"\", process_id=\"\"):\n        agent
+    = agent[:15]\n        process_id = process_id[:25]\n        process_id = \"_\"
+    + process_id if process_id else \"\"\n        action = action[:15]\n        action
+    = \"_\" + action if action else \"\"\n        return self.spec.tool_prefix + \"_\"
+    + agent + process_id + action\n\n    # todo, this needs to create history record
+    before iterating\n    def _program_tool(self, agent: Agent, program: str, call_context:
+    CallContext):\n        async def fn(_self, body):\n            async for event
+    in RecordAgentResponseIterator(\n                (await agent.create_process()).stream_action(program,
+    body), call_context.process_id, call_context.thread_id\n            ):\n                yield
+    event\n\n        return fn\n\n    # todo, this needs to create history record
+    before iterating\n    def _process_tool(self, agent: Agent, action: str, process_id:
+    str, call_context: CallContext):\n        def fn(_self, body):\n            return
+    RecordAgentResponseIterator(\n                agent.process(process_id).stream_action(action,
+    body), call_context.process_id, call_context.thread_id\n            )\n\n        return
+    fn"}, {"id": "1d4eb61f5c96442e98cf80541dcbb4e8", "file_name": "agent_controller.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_controller.py",
+    "text": "def _build_tool_def(self, agent, operation, name, endpoint_schema, tool_call):\n        description
+    = self._description(endpoint_schema, name)\n        model = self._body_model(endpoint_schema,
+    name)\n        return FnHandler(\n            name=name,\n            description=lambda
+    a, b: description,\n            input_model_fn=lambda a, b: model,\n            output_model_fn=lambda
+    a, b: Any,\n            fn=tool_call,\n            extra={\n                \"title\":
+    agent,\n                \"sub_title\": operation,\n                \"agent_call\":
+    True,\n            },\n        )\n\n    @staticmethod\n    def _body_model(endpoint_schema,
+    name):\n        body = endpoint_schema.get(\"requestBody\")\n        if body and
+    \"application/json\" not in body[\"content\"]:\n            raise ValueError(f\"Agent
+    action at {name} does not support application/json\")\n        json_schema = body[\"content\"][\"application/json\"][\"schema\"]
+    if body else dict(type=\"object\", properties={})\n        return schema_to_model(dict(type=\"object\",
+    properties=dict(body=json_schema)), \"Input\")\n\n    @staticmethod\n    def _description(endpoint_schema,
+    name):\n        description = endpoint_schema.get(\"description\", \"\")\n        if
+    not description:\n            logger.warning(f\"Agent program at {name} does not
+    have a description. LLM may not use it properly\")\n        return description\n\n    #
+    needs to be under 64 characters\n    def _name(self, agent, action=\"\", process_id=\"\"):\n        agent
+    = agent[:15]\n        process_id = process_id[:25]\n        process_id = \"_\"
+    + process_id if process_id else \"\"\n        action = action[:15]\n        action
+    = \"_\" + action if action else \"\"\n        return self.spec.tool_prefix + \"_\"
+    + agent + process_id + action\n\n    # todo, this needs to create history record
+    before iterating\n    def _program_tool(self, agent: Agent, program: str, call_context:
+    CallContext):\n        async def fn(_self, body):\n            async for event
+    in RecordAgentResponseIterator(\n                (await agent.create_process()).stream_action(program,
+    body), call_context.process_id, call_context.thread_id\n            ):\n                yield
+    event\n\n        return fn\n\n    # todo, this needs to create history record
+    before iterating\n    def _process_tool(self, agent: Agent, action: str, process_id:
+    str, call_context: CallContext):\n        def fn(_self, body):\n            return
+    RecordAgentResponseIterator(\n                agent.process(process_id).stream_action(action,
+    body), call_context.process_id, call_context.thread_id\n            )\n\n        return
+    fn"}, {"id": "a1a5966f02b04763a7d063be7537c40c", "file_name": "retriever_agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/retriever_agent/retriever_agent.py",
+    "text": "class AgentMachine(Specable[MachineSpec]):\n    memory: AgentMemory\n    security_manager:
+    SecurityManager\n    agent_controllers: List[AgentController]\n    app: Optional[FastAPI]\n\n    def
+    __init__(self, spec: MachineSpec):\n        super().__init__(spec)\n        agents
+    = {}\n        for name, r in AgentOS.get_resources(AgentResource).items():\n            with
+    _error_wrapper(r):\n                agents[name] = r.spec.instantiate()\n\n        self.memory
+    = self.spec.get_agent_memory()\n        self.agent_controllers = [AgentController(name,
+    agent) for name, agent in agents.items()]\n        self.app = None\n        self.security_manager
+    = self.spec.security_manager.instantiate()\n\n    async def start(self, app):\n        if
+    self.app:\n            raise Exception(\"Machine already started\")\n        for
+    program in self.agent_controllers:\n            await program.start(app)\n        await
+    self.memory.start()\n        self.app = app\n\n    async def stop(self):\n        if
+    self.app:\n            for program in self.agent_controllers:\n                await
+    program.stop(self.app)\n            await self.memory.stop()\n            self.app
+    = None"}, {"id": "f57691ac33b94cb18176524fdefbb0e3", "file_name": "agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class Agent(Specable[AgentSpec]):\n    cpu: AgentCPU\n\n    def __init__(self,
+    **kwargs):\n        super().__init__(**kwargs)\n        self.cpu = self.spec.cpu.instantiate()\n        if
+    self.spec.agent_refs and hasattr(self.cpu, \"logic_units\"):\n            self.cpu.logic_units.append(\n                AgentsLogicUnit(\n                    processing_unit_locator=self.cpu,\n                    spec=AgentsLogicUnitSpec(agents=self.spec.agent_refs),\n                )\n            )"},
+    {"id": "7e8699cb6b324c2088ac66441070a78e", "file_name": "agent_creator.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/bin/agent_creator.py",
+    "text": "class AgentsLogicUnit(Specable[AgentsLogicUnitSpec], LogicUnit):\n    _machine_schemas:
+    Dict[str, dict]\n\n    def __init__(self, **kwargs):\n        super().__init__(**kwargs)\n        self._machine_schemas
+    = {}\n\n    async def build_tools(self, call_context: CallContext) -> List[FnHandler]:\n        tools
+    = await self.build_program_tools(call_context)\n        call_history = await AgentCallHistory.get_agent_state(call_context.process_id,
+    call_context.thread_id)\n        for call in call_history:\n            for action
+    in call.available_actions:\n                context_ = await self.build_action_tool(\n                    call.machine,
+    call.agent, action, call.remote_process_id, call_context\n                )\n                if
+    context_:\n                    tools.append(context_)\n\n        return tools\n\n    async
+    def clone_thread(self, old_context: CallContext, new_context: CallContext):\n        call_history
+    = await AgentCallHistory.get_agent_state(old_context.process_id, old_context.thread_id)\n        for
+    call in call_history:\n            await AgentCallHistory(\n                parent_process_id=new_context.process_id,\n                parent_thread_id=new_context.thread_id,\n                machine=call.machine,\n                agent=call.agent,\n                remote_process_id=call.remote_process_id,\n                state=call.state,\n                available_actions=call.available_actions,\n            ).upsert()\n\n    async
+    def _get_schema(self, machine: str) -> dict:\n        if machine not in self._machine_schemas:\n            self._machine_schemas[machine]
+    = await Machine(machine=machine).get_schema()\n        return self._machine_schemas[machine]\n\n    async
+    def build_action_tool(\n        self, machine: str, agent: str, action: str, remote_process_id:
+    str, call_context: CallContext\n    ):\n        agent_client = Agent.get(agent)\n        path
+    = f\"/agents/{agent}/processes/{{process_id}}/actions/{action}\"\n        machine_schema
+    = await self._get_schema(machine)\n        endpoint_schema = machine_schema[\"paths\"][path][\"post\"]\n        try:\n            name
+    = self._name(agent, action=action)\n            tool = self._build_tool_def(\n                agent,\n                action,\n                name,\n                endpoint_schema,\n                self._process_tool(agent_client,
+    action, remote_process_id, call_context),\n            )\n            return tool\n        except
+    ValueError:\n            logger.warning(f\"unable to build tool {path}\", exc_info=True)\n\n    async
+    def build_program_tools(self, call_context: CallContext):\n        tools = []\n        for
+    agent in self.spec.agents:\n            agent_client = Agent.get(agent)\n            machine_schema
+    = await self._get_schema(agent_client.machine)\n            for action in await
+    agent_client.programs():\n                path = f\"/agents/{agent}/processes/{{process_id}}/actions/{action}\"\n                try:\n                    name
+    = self._name(agent, action=action)\n                    tool = self._build_tool_def(\n                        agent,\n                        action,\n                        name,\n                        machine_schema[\"paths\"][path][\"post\"],\n                        self._program_tool(agent_client,
+    action, call_context),\n                    )\n                    tools.append(tool)\n                except
+    ValueError:\n                    logger.warning(f\"unable to build tool {path}\",
+    exc_info=True)\n        return tools"}, {"id": "019f14d9b8e04916a24cad7e1502f225",
+    "file_name": "agents_logic_unit.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "class AgentMachine(Specable[MachineSpec]):\n    memory: AgentMemory\n    security_manager:
+    SecurityManager\n    agent_controllers: List[AgentController]\n    app: Optional[FastAPI]\n\n    def
+    __init__(self, spec: MachineSpec):\n        super().__init__(spec)\n        agents
+    = {}\n        for name, r in AgentOS.get_resources(AgentResource).items():\n            with
+    _error_wrapper(r):\n                agents[name] = r.spec.instantiate()\n\n        self.memory
+    = self.spec.get_agent_memory()\n        self.agent_controllers = [AgentController(name,
+    agent) for name, agent in agents.items()]\n        self.app = None\n        self.security_manager
+    = self.spec.security_manager.instantiate()\n\n    async def start(self, app):\n        if
+    self.app:\n            raise Exception(\"Machine already started\")\n        for
+    program in self.agent_controllers:\n            await program.start(app)\n        await
+    self.memory.start()\n        self.app = app\n\n    async def stop(self):\n        if
+    self.app:\n            for program in self.agent_controllers:\n                await
+    program.stop(self.app)\n            await self.memory.stop()\n            self.app
+    = None"}, {"id": "77cae36164ff4a0d8b63c19bc753b349", "file_name": "agent_controller.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_controller.py",
+    "text": "class Agent(Specable[AgentSpec]):\n    cpu: AgentCPU\n\n    def __init__(self,
+    **kwargs):\n        super().__init__(**kwargs)\n        self.cpu = self.spec.cpu.instantiate()\n        if
+    self.spec.agent_refs and hasattr(self.cpu, \"logic_units\"):\n            self.cpu.logic_units.append(\n                AgentsLogicUnit(\n                    processing_unit_locator=self.cpu,\n                    spec=AgentsLogicUnitSpec(agents=self.spec.agent_refs),\n                )\n            )"},
+    {"id": "b332a494d793457d85cb79c19744c92f", "file_name": "agent.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class AgentsLogicUnit(Specable[AgentsLogicUnitSpec], LogicUnit):\n    _machine_schemas:
+    Dict[str, dict]\n\n    def __init__(self, **kwargs):\n        super().__init__(**kwargs)\n        self._machine_schemas
+    = {}\n\n    async def build_tools(self, call_context: CallContext) -> List[FnHandler]:\n        tools
+    = await self.build_program_tools(call_context)\n        call_history = await AgentCallHistory.get_agent_state(call_context.process_id,
+    call_context.thread_id)\n        for call in call_history:\n            for action
+    in call.available_actions:\n                context_ = await self.build_action_tool(\n                    call.machine,
+    call.agent, action, call.remote_process_id, call_context\n                )\n                if
+    context_:\n                    tools.append(context_)\n\n        return tools\n\n    async
+    def clone_thread(self, old_context: CallContext, new_context: CallContext):\n        call_history
+    = await AgentCallHistory.get_agent_state(old_context.process_id, old_context.thread_id)\n        for
+    call in call_history:\n            await AgentCallHistory(\n                parent_process_id=new_context.process_id,\n                parent_thread_id=new_context.thread_id,\n                machine=call.machine,\n                agent=call.agent,\n                remote_process_id=call.remote_process_id,\n                state=call.state,\n                available_actions=call.available_actions,\n            ).upsert()\n\n    async
+    def _get_schema(self, machine: str) -> dict:\n        if machine not in self._machine_schemas:\n            self._machine_schemas[machine]
+    = await Machine(machine=machine).get_schema()\n        return self._machine_schemas[machine]\n\n    async
+    def build_action_tool(\n        self, machine: str, agent: str, action: str, remote_process_id:
+    str, call_context: CallContext\n    ):\n        agent_client = Agent.get(agent)\n        path
+    = f\"/agents/{agent}/processes/{{process_id}}/actions/{action}\"\n        machine_schema
+    = await self._get_schema(machine)\n        endpoint_schema = machine_schema[\"paths\"][path][\"post\"]\n        try:\n            name
+    = self._name(agent, action=action)\n            tool = self._build_tool_def(\n                agent,\n                action,\n                name,\n                endpoint_schema,\n                self._process_tool(agent_client,
+    action, remote_process_id, call_context),\n            )\n            return tool\n        except
+    ValueError:\n            logger.warning(f\"unable to build tool {path}\", exc_info=True)\n\n    async
+    def build_program_tools(self, call_context: CallContext):\n        tools = []\n        for
+    agent in self.spec.agents:\n            agent_client = Agent.get(agent)\n            machine_schema
+    = await self._get_schema(agent_client.machine)\n            for action in await
+    agent_client.programs():\n                path = f\"/agents/{agent}/processes/{{process_id}}/actions/{action}\"\n                try:\n                    name
+    = self._name(agent, action=action)\n                    tool = self._build_tool_def(\n                        agent,\n                        action,\n                        name,\n                        machine_schema[\"paths\"][path][\"post\"],\n                        self._program_tool(agent_client,
+    action, call_context),\n                    )\n                    tools.append(tool)\n                except
+    ValueError:\n                    logger.warning(f\"unable to build tool {path}\",
+    exc_info=True)\n        return tools"}, {"id": "38780ab3f3d94cd39c6841eba7e9b13c",
+    "file_name": "simple_agent.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/simple_agent.py",
+    "text": "class AgentState(BaseModel, Generic[T]):\n    name: str\n    data: T"},
+    {"id": "9b5fd4128f51445ca2ec13de48309b5e", "file_name": "agent.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class AgentSpec(BaseModel):\n    cpu: AnnotatedReference[AgentCPU]\n    agent_refs:
+    List[str] = []"}, {"id": "9c1d76887f59430a82469ef9de1be138", "file_name": "generic_agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/generic_agent.py",
+    "text": "class Agent(Specable[AgentSpec]):\n    cpu: AgentCPU\n\n    def __init__(self,
+    **kwargs):\n        super().__init__(**kwargs)\n        self.cpu = self.spec.cpu.instantiate()\n        if
+    self.spec.agent_refs and hasattr(self.cpu, \"logic_units\"):\n            self.cpu.logic_units.append(\n                AgentsLogicUnit(\n                    processing_unit_locator=self.cpu,\n                    spec=AgentsLogicUnitSpec(agents=self.spec.agent_refs),\n                )\n            )"},
+    {"id": "b0276884307e4b64bfb4bd8d49c96af2", "file_name": "agent_machine.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_machine.py",
+    "text": "class AgentsLogicUnit(Specable[AgentsLogicUnitSpec], LogicUnit):\n    _machine_schemas:
+    Dict[str, dict]\n\n    def __init__(self, **kwargs):\n        super().__init__(**kwargs)\n        self._machine_schemas
+    = {}\n\n    async def build_tools(self, call_context: CallContext) -> List[FnHandler]:\n        tools
+    = await self.build_program_tools(call_context)\n        call_history = await AgentCallHistory.get_agent_state(call_context.process_id,
+    call_context.thread_id)\n        for call in call_history:\n            for action
+    in call.available_actions:\n                context_ = await self.build_action_tool(\n                    call.machine,
+    call.agent, action, call.remote_process_id, call_context\n                )\n                if
+    context_:\n                    tools.append(context_)\n\n        return tools\n\n    async
+    def clone_thread(self, old_context: CallContext, new_context: CallContext):\n        call_history
+    = await AgentCallHistory.get_agent_state(old_context.process_id, old_context.thread_id)\n        for
+    call in call_history:\n            await AgentCallHistory(\n                parent_process_id=new_context.process_id,\n                parent_thread_id=new_context.thread_id,\n                machine=call.machine,\n                agent=call.agent,\n                remote_process_id=call.remote_process_id,\n                state=call.state,\n                available_actions=call.available_actions,\n            ).upsert()\n\n    async
+    def _get_schema(self, machine: str) -> dict:\n        if machine not in self._machine_schemas:\n            self._machine_schemas[machine]
+    = await Machine(machine=machine).get_schema()\n        return self._machine_schemas[machine]\n\n    async
+    def build_action_tool(\n        self, machine: str, agent: str, action: str, remote_process_id:
+    str, call_context: CallContext\n    ):\n        agent_client = Agent.get(agent)\n        path
+    = f\"/agents/{agent}/processes/{{process_id}}/actions/{action}\"\n        machine_schema
+    = await self._get_schema(machine)\n        endpoint_schema = machine_schema[\"paths\"][path][\"post\"]\n        try:\n            name
+    = self._name(agent, action=action)\n            tool = self._build_tool_def(\n                agent,\n                action,\n                name,\n                endpoint_schema,\n                self._process_tool(agent_client,
+    action, remote_process_id, call_context),\n            )\n            return tool\n        except
+    ValueError:\n            logger.warning(f\"unable to build tool {path}\", exc_info=True)\n\n    async
+    def build_program_tools(self, call_context: CallContext):\n        tools = []\n        for
+    agent in self.spec.agents:\n            agent_client = Agent.get(agent)\n            machine_schema
+    = await self._get_schema(agent_client.machine)\n            for action in await
+    agent_client.programs():\n                path = f\"/agents/{agent}/processes/{{process_id}}/actions/{action}\"\n                try:\n                    name
+    = self._name(agent, action=action)\n                    tool = self._build_tool_def(\n                        agent,\n                        action,\n                        name,\n                        machine_schema[\"paths\"][path][\"post\"],\n                        self._program_tool(agent_client,
+    action, call_context),\n                    )\n                    tools.append(tool)\n                except
+    ValueError:\n                    logger.warning(f\"unable to build tool {path}\",
+    exc_info=True)\n        return tools"}, {"id": "eae1a7b64c2448fba286e8f80a6bf287",
+    "file_name": "retriever_agent.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/retriever_agent/retriever_agent.py",
+    "text": "class AgentMachine(Specable[MachineSpec]):\n    memory: AgentMemory\n    security_manager:
+    SecurityManager\n    agent_controllers: List[AgentController]\n    app: Optional[FastAPI]\n\n    def
+    __init__(self, spec: MachineSpec):\n        super().__init__(spec)\n        agents
+    = {}\n        for name, r in AgentOS.get_resources(AgentResource).items():\n            with
+    _error_wrapper(r):\n                agents[name] = r.spec.instantiate()\n\n        self.memory
+    = self.spec.get_agent_memory()\n        self.agent_controllers = [AgentController(name,
+    agent) for name, agent in agents.items()]\n        self.app = None\n        self.security_manager
+    = self.spec.security_manager.instantiate()\n\n    async def start(self, app):\n        if
+    self.app:\n            raise Exception(\"Machine already started\")\n        for
+    program in self.agent_controllers:\n            await program.start(app)\n        await
+    self.memory.start()\n        self.app = app\n\n    async def stop(self):\n        if
+    self.app:\n            for program in self.agent_controllers:\n                await
+    program.stop(self.app)\n            await self.memory.stop()\n            self.app
+    = None"}, {"id": "8594870afe154f27a52fd75125b2d344", "file_name": "agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class AgentState(BaseModel, Generic[T]):\n    name: str\n    data: T"},
+    {"id": "1afcfada58b94637a6c32c7b0216b983", "file_name": "agent.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class AgentSpec(BaseModel):\n    cpu: AnnotatedReference[AgentCPU]\n    agent_refs:
+    List[str] = []"}, {"id": "48615788da8f47ee801f06185a608868", "file_name": "simple_agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/simple_agent.py",
+    "text": "class SimpleAgent(Agent, Specable[SimpleAgentSpec]):\n    def __init__(self,
+    spec):\n        super().__init__(spec=spec)\n        for action in self.spec.actions:\n            setattr(\n                self,\n                action.name,\n                register_action(\n                    *action.allowed_states,\n                    name=action.name,\n                    input_model=action.make_input_schema,\n                    output_model=action.make_output_schema,\n                    description=action.description,\n                )(self._act_wrapper(action)),\n            )\n\n    async
+    def create_process(self, process_id):\n        t = await self.cpu.main_thread(process_id)\n        await
+    t.set_boot_messages(prompts=[SystemCPUMessage(prompt=self.spec.system_prompt)])\n\n    @staticmethod\n    def
+    _act_wrapper(action):\n        async def fn(self, process_id, **kwargs):\n            async
+    for e in SimpleAgent._act(self, action, process_id, **kwargs):\n                yield
+    e\n\n        return fn\n\n    async def _act(self, action: ActionDefinition, process_id,
+    **kwargs) -> AsyncIterable[StreamEvent]:\n        request_body = to_jsonable_python(kwargs.get(\"body\")
+    or {})\n        body = dict(datetime_iso=datetime.now().isoformat(), body=str(request_body))\n        if
+    isinstance(request_body, dict):\n            body.update(request_body)\n\n        files
+    = kwargs.get(\"file\", []) or []\n        if not isinstance(files, list):\n            files
+    = [files]\n\n        image_messages = [ImageCPUMessage(image=file.file, prompt=file.filename)
+    for file in files if file]\n\n        env = Environment(undefined=StrictUndefined)\n        text_message
+    = UserTextCPUMessage(prompt=env.from_string(action.user_prompt).render(**body))\n\n        thread
+    = await self.cpu.main_thread(process_id)\n        response = thread.stream_request(output_format=action.output_schema,
+    prompts=[*image_messages, text_message])\n\n        async for event in response:\n            yield
+    event\n        yield AgentStateEvent(state=action.output_state)"}, {"id": "d046aa78e540474bace563498f83e4f9",
+    "file_name": "agents_logic_unit.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "raise\n        finally:\n            await store_events(self.name, process.record_id,
+    events_to_store)\n\n    async def stream_agent_iterator(\n            self,\n            stream:
+    AsyncIterator[StreamEvent],\n            process: ProcessDoc,\n            call_name,\n            user_input:
+    typing.Dict[str, typing.Any],\n    ) -> AsyncIterator[StreamEvent]:\n        state_change
+    = None\n        seen_end = False\n        try:\n            yield UserInputEvent(input=to_jsonable_python(user_input,
+    fallback=str))\n            yield StartAgentCallEvent(\n                machine=AgentOS.current_machine_url(),\n                agent_name=self.name,\n                call_name=call_name,\n                process_id=process.record_id,\n            )\n            async
+    for event in stream:\n                if event.is_root_and_type(ErrorEvent):\n                    logger.warning(\"Error
+    event received\")\n                if not seen_end:\n                    seen_end
+    = event.is_root_end_event()\n                    if event.is_root_and_type(AgentStateEvent):\n                        state_change
+    = True\n                        event.available_actions = self.get_available_actions(event.state)\n                        await
+    process.update(state=event.state)\n                    yield event\n                else:\n                    logger.warning(f\"Received
+    event after end event ({event.event_type}), ignoring\")\n            if not state_change:\n                await
+    process.update(state=\"terminated\")\n                yield AgentStateEvent(state=\"terminated\",
+    available_actions=self.get_available_actions(\"terminated\"))\n            if
+    not seen_end:\n                yield SuccessEvent()\n        except HTTPException
+    as e:\n            logger.warning(f\"HTTP Error {e}\", exc_info=logger.isEnabledFor(logging.DEBUG))\n            if
+    not seen_end:\n                await process.update(state=\"http_error\", error_info=dict(detail=e.detail,
+    status_code=e.status_code))\n                yield AgentStateEvent(state=\"http_error\",
+    available_actions=self.get_available_actions(\"http_error\"))\n                yield
+    ErrorEvent(reason=dict(detail=e.detail, status_code=e.status_code))\n        except
+    Exception as e:\n            logger.exception(f\"Unhandled Error {e}\")\n            if
+    not seen_end:\n                await process.update(state=\"unhandled_error\",
+    error_info=dict(detail=str(e), status_code=500))\n                yield AgentStateEvent(\n                    state=\"unhandled_error\",
+    available_actions=self.get_available_actions(\"unhandled_error\")\n                )\n                yield
+    ErrorEvent(reason=dict(detail=str(e), status_code=500))\n\n    async def stream_agent_fn(self,
+    handler, **kwargs) -> AsyncIterator[StreamEvent]:\n        response = await handler.fn(self.agent,
+    **kwargs)\n        if isinstance(response, AgentState):\n            yield OutputEvent.get(content=to_jsonable_python(response.data))\n            yield
+    AgentStateEvent(state=response.name, available_actions=self.get_available_actions(response.name))\n        else:\n            yield
+    OutputEvent.get(content=to_jsonable_python(to_jsonable_python(response)))\n\n    def
+    process_action(self, handler: FnHandler, isEndpointAProgram: bool):\n        logger.debug(f\"Registering
+    action {handler.name} for program {self.name}\")\n        sig = inspect.signature(handler.fn)\n        params
+    = dict(sig.parameters)\n        model: typing.Type[BaseModel] = handler.input_model_fn(self.agent,
+    handler)\n        for field in model.model_fields:\n            kwargs = dict(annotation=model.model_fields[field].annotation)\n            if
+    isinstance(model.model_fields[field], Body) or isinstance(model.model_fields[field],
+    Param):\n                kwargs[\"annotation\"] = typing.Annotated[model.model_fields[field].annotation,
+    model.model_fields[field]]\n            if model.model_fields[field].default is
+    not PydanticUndefined:\n                kwargs[\"default\"] = model.model_fields[field].default"},
+    {"id": "d84682e0e9b649158dc6ec83f40379f2", "file_name": "agent_machine.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_machine.py",
+    "text": "class SimpleAgent(Agent, Specable[SimpleAgentSpec]):\n    def __init__(self,
+    spec):\n        super().__init__(spec=spec)\n        for action in self.spec.actions:\n            setattr(\n                self,\n                action.name,\n                register_action(\n                    *action.allowed_states,\n                    name=action.name,\n                    input_model=action.make_input_schema,\n                    output_model=action.make_output_schema,\n                    description=action.description,\n                )(self._act_wrapper(action)),\n            )\n\n    async
+    def create_process(self, process_id):\n        t = await self.cpu.main_thread(process_id)\n        await
+    t.set_boot_messages(prompts=[SystemCPUMessage(prompt=self.spec.system_prompt)])\n\n    @staticmethod\n    def
+    _act_wrapper(action):\n        async def fn(self, process_id, **kwargs):\n            async
+    for e in SimpleAgent._act(self, action, process_id, **kwargs):\n                yield
+    e\n\n        return fn\n\n    async def _act(self, action: ActionDefinition, process_id,
+    **kwargs) -> AsyncIterable[StreamEvent]:\n        request_body = to_jsonable_python(kwargs.get(\"body\")
+    or {})\n        body = dict(datetime_iso=datetime.now().isoformat(), body=str(request_body))\n        if
+    isinstance(request_body, dict):\n            body.update(request_body)\n\n        files
+    = kwargs.get(\"file\", []) or []\n        if not isinstance(files, list):\n            files
+    = [files]\n\n        image_messages = [ImageCPUMessage(image=file.file, prompt=file.filename)
+    for file in files if file]\n\n        env = Environment(undefined=StrictUndefined)\n        text_message
+    = UserTextCPUMessage(prompt=env.from_string(action.user_prompt).render(**body))\n\n        thread
+    = await self.cpu.main_thread(process_id)\n        response = thread.stream_request(output_format=action.output_schema,
+    prompts=[*image_messages, text_message])\n\n        async for event in response:\n            yield
+    event\n        yield AgentStateEvent(state=action.output_state)"}, {"id": "91a5050c44c949d99b85fc54e2dc5650",
+    "file_name": "agents_logic_unit.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "class AgentState(BaseModel, Generic[T]):\n    name: str\n    data: T"},
+    {"id": "36923850edc34ea88d1556ffa1b7581e", "file_name": "agents_logic_unit.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "class AgentSpec(BaseModel):\n    cpu: AnnotatedReference[AgentCPU]\n    agent_refs:
+    List[str] = []"}, {"id": "efb287ef2e1f4c2f97fa1e5e1dd40c42", "file_name": "agents_logic_unit.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "raise\n        finally:\n            await store_events(self.name, process.record_id,
+    events_to_store)\n\n    async def stream_agent_iterator(\n            self,\n            stream:
+    AsyncIterator[StreamEvent],\n            process: ProcessDoc,\n            call_name,\n            user_input:
+    typing.Dict[str, typing.Any],\n    ) -> AsyncIterator[StreamEvent]:\n        state_change
+    = None\n        seen_end = False\n        try:\n            yield UserInputEvent(input=to_jsonable_python(user_input,
+    fallback=str))\n            yield StartAgentCallEvent(\n                machine=AgentOS.current_machine_url(),\n                agent_name=self.name,\n                call_name=call_name,\n                process_id=process.record_id,\n            )\n            async
+    for event in stream:\n                if event.is_root_and_type(ErrorEvent):\n                    logger.warning(\"Error
+    event received\")\n                if not seen_end:\n                    seen_end
+    = event.is_root_end_event()\n                    if event.is_root_and_type(AgentStateEvent):\n                        state_change
+    = True\n                        event.available_actions = self.get_available_actions(event.state)\n                        await
+    process.update(state=event.state)\n                    yield event\n                else:\n                    logger.warning(f\"Received
+    event after end event ({event.event_type}), ignoring\")\n            if not state_change:\n                await
+    process.update(state=\"terminated\")\n                yield AgentStateEvent(state=\"terminated\",
+    available_actions=self.get_available_actions(\"terminated\"))\n            if
+    not seen_end:\n                yield SuccessEvent()\n        except HTTPException
+    as e:\n            logger.warning(f\"HTTP Error {e}\", exc_info=logger.isEnabledFor(logging.DEBUG))\n            if
+    not seen_end:\n                await process.update(state=\"http_error\", error_info=dict(detail=e.detail,
+    status_code=e.status_code))\n                yield AgentStateEvent(state=\"http_error\",
+    available_actions=self.get_available_actions(\"http_error\"))\n                yield
+    ErrorEvent(reason=dict(detail=e.detail, status_code=e.status_code))\n        except
+    Exception as e:\n            logger.exception(f\"Unhandled Error {e}\")\n            if
+    not seen_end:\n                await process.update(state=\"unhandled_error\",
+    error_info=dict(detail=str(e), status_code=500))\n                yield AgentStateEvent(\n                    state=\"unhandled_error\",
+    available_actions=self.get_available_actions(\"unhandled_error\")\n                )\n                yield
+    ErrorEvent(reason=dict(detail=str(e), status_code=500))\n\n    async def stream_agent_fn(self,
+    handler, **kwargs) -> AsyncIterator[StreamEvent]:\n        response = await handler.fn(self.agent,
+    **kwargs)\n        if isinstance(response, AgentState):\n            yield OutputEvent.get(content=to_jsonable_python(response.data))\n            yield
+    AgentStateEvent(state=response.name, available_actions=self.get_available_actions(response.name))\n        else:\n            yield
+    OutputEvent.get(content=to_jsonable_python(to_jsonable_python(response)))\n\n    def
+    process_action(self, handler: FnHandler, isEndpointAProgram: bool):\n        logger.debug(f\"Registering
+    action {handler.name} for program {self.name}\")\n        sig = inspect.signature(handler.fn)\n        params
+    = dict(sig.parameters)\n        model: typing.Type[BaseModel] = handler.input_model_fn(self.agent,
+    handler)\n        for field in model.model_fields:\n            kwargs = dict(annotation=model.model_fields[field].annotation)\n            if
+    isinstance(model.model_fields[field], Body) or isinstance(model.model_fields[field],
+    Param):\n                kwargs[\"annotation\"] = typing.Annotated[model.model_fields[field].annotation,
+    model.model_fields[field]]\n            if model.model_fields[field].default is
+    not PydanticUndefined:\n                kwargs[\"default\"] = model.model_fields[field].default"},
+    {"id": "85ad4786edf34c0e82229b14def5d612", "file_name": "generic_agent.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/generic_agent.py",
+    "text": "class SimpleAgent(Agent, Specable[SimpleAgentSpec]):\n    def __init__(self,
+    spec):\n        super().__init__(spec=spec)\n        for action in self.spec.actions:\n            setattr(\n                self,\n                action.name,\n                register_action(\n                    *action.allowed_states,\n                    name=action.name,\n                    input_model=action.make_input_schema,\n                    output_model=action.make_output_schema,\n                    description=action.description,\n                )(self._act_wrapper(action)),\n            )\n\n    async
+    def create_process(self, process_id):\n        t = await self.cpu.main_thread(process_id)\n        await
+    t.set_boot_messages(prompts=[SystemCPUMessage(prompt=self.spec.system_prompt)])\n\n    @staticmethod\n    def
+    _act_wrapper(action):\n        async def fn(self, process_id, **kwargs):\n            async
+    for e in SimpleAgent._act(self, action, process_id, **kwargs):\n                yield
+    e\n\n        return fn\n\n    async def _act(self, action: ActionDefinition, process_id,
+    **kwargs) -> AsyncIterable[StreamEvent]:\n        request_body = to_jsonable_python(kwargs.get(\"body\")
+    or {})\n        body = dict(datetime_iso=datetime.now().isoformat(), body=str(request_body))\n        if
+    isinstance(request_body, dict):\n            body.update(request_body)\n\n        files
+    = kwargs.get(\"file\", []) or []\n        if not isinstance(files, list):\n            files
+    = [files]\n\n        image_messages = [ImageCPUMessage(image=file.file, prompt=file.filename)
+    for file in files if file]\n\n        env = Environment(undefined=StrictUndefined)\n        text_message
+    = UserTextCPUMessage(prompt=env.from_string(action.user_prompt).render(**body))\n\n        thread
+    = await self.cpu.main_thread(process_id)\n        response = thread.stream_request(output_format=action.output_schema,
+    prompts=[*image_messages, text_message])\n\n        async for event in response:\n            yield
+    event\n        yield AgentStateEvent(state=action.output_state)"}, {"id": "0ed241b07a8e4757baa971b329e12d7c",
+    "file_name": "simple_agent.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/simple_agent.py",
+    "text": "raise\n        finally:\n            await store_events(self.name, process.record_id,
+    events_to_store)\n\n    async def stream_agent_iterator(\n            self,\n            stream:
+    AsyncIterator[StreamEvent],\n            process: ProcessDoc,\n            call_name,\n            user_input:
+    typing.Dict[str, typing.Any],\n    ) -> AsyncIterator[StreamEvent]:\n        state_change
+    = None\n        seen_end = False\n        try:\n            yield UserInputEvent(input=to_jsonable_python(user_input,
+    fallback=str))\n            yield StartAgentCallEvent(\n                machine=AgentOS.current_machine_url(),\n                agent_name=self.name,\n                call_name=call_name,\n                process_id=process.record_id,\n            )\n            async
+    for event in stream:\n                if event.is_root_and_type(ErrorEvent):\n                    logger.warning(\"Error
+    event received\")\n                if not seen_end:\n                    seen_end
+    = event.is_root_end_event()\n                    if event.is_root_and_type(AgentStateEvent):\n                        state_change
+    = True\n                        event.available_actions = self.get_available_actions(event.state)\n                        await
+    process.update(state=event.state)\n                    yield event\n                else:\n                    logger.warning(f\"Received
+    event after end event ({event.event_type}), ignoring\")\n            if not state_change:\n                await
+    process.update(state=\"terminated\")\n                yield AgentStateEvent(state=\"terminated\",
+    available_actions=self.get_available_actions(\"terminated\"))\n            if
+    not seen_end:\n                yield SuccessEvent()\n        except HTTPException
+    as e:\n            logger.warning(f\"HTTP Error {e}\", exc_info=logger.isEnabledFor(logging.DEBUG))\n            if
+    not seen_end:\n                await process.update(state=\"http_error\", error_info=dict(detail=e.detail,
+    status_code=e.status_code))\n                yield AgentStateEvent(state=\"http_error\",
+    available_actions=self.get_available_actions(\"http_error\"))\n                yield
+    ErrorEvent(reason=dict(detail=e.detail, status_code=e.status_code))\n        except
+    Exception as e:\n            logger.exception(f\"Unhandled Error {e}\")\n            if
+    not seen_end:\n                await process.update(state=\"unhandled_error\",
+    error_info=dict(detail=str(e), status_code=500))\n                yield AgentStateEvent(\n                    state=\"unhandled_error\",
+    available_actions=self.get_available_actions(\"unhandled_error\")\n                )\n                yield
+    ErrorEvent(reason=dict(detail=str(e), status_code=500))\n\n    async def stream_agent_fn(self,
+    handler, **kwargs) -> AsyncIterator[StreamEvent]:\n        response = await handler.fn(self.agent,
+    **kwargs)\n        if isinstance(response, AgentState):\n            yield OutputEvent.get(content=to_jsonable_python(response.data))\n            yield
+    AgentStateEvent(state=response.name, available_actions=self.get_available_actions(response.name))\n        else:\n            yield
+    OutputEvent.get(content=to_jsonable_python(to_jsonable_python(response)))\n\n    def
+    process_action(self, handler: FnHandler, isEndpointAProgram: bool):\n        logger.debug(f\"Registering
+    action {handler.name} for program {self.name}\")\n        sig = inspect.signature(handler.fn)\n        params
+    = dict(sig.parameters)\n        model: typing.Type[BaseModel] = handler.input_model_fn(self.agent,
+    handler)\n        for field in model.model_fields:\n            kwargs = dict(annotation=model.model_fields[field].annotation)\n            if
+    isinstance(model.model_fields[field], Body) or isinstance(model.model_fields[field],
+    Param):\n                kwargs[\"annotation\"] = typing.Annotated[model.model_fields[field].annotation,
+    model.model_fields[field]]\n            if model.model_fields[field].default is
+    not PydanticUndefined:\n                kwargs[\"default\"] = model.model_fields[field].default"},
+    {"id": "e1dca9af51924cb9a6d86ebc635b6fa3", "file_name": "agent_controller.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_controller.py",
+    "text": "def main():\n    if \"libedit\" in readline.__doc__:\n        readline.parse_and_bind(\"bind
+    ^I rl_complete\")\n    else:\n        readline.set_completer_delims(\" \\t\\n;\")\n        readline.parse_and_bind(\"tab:
+    complete\")\n    typer.run(create_agent)"}, {"id": "4c032f4a1e794f678445d4ec3f1c3337",
+    "file_name": "agents_logic_unit.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "class AgentController:\n    name: str\n    agent: object\n    actions:
+    typing.Dict[str, FnHandler]\n\n    def __init__(self, name, agent):\n        self.name
+    = name\n        self.actions = {}\n        self.agent = agent\n        for handler
+    in get_handlers(self.agent):\n            if handler.name in self.actions:\n                self.actions[handler.name].extra[\"allowed_states\"]
+    = (\n                    *self.actions[handler.name].extra[\"allowed_states\"],\n                    *handler.extra[\"allowed_states\"],\n                )\n            else:\n                self.actions[handler.name]
+    = handler\n\n    async def start(self, app: FastAPI):\n        logger.info(f\"Starting
+    agent ''{self.name}''\")\n        app.add_api_route(\n            f\"/agents/{self.name}/processes\",\n            endpoint=self.list_processes,\n            methods=[\"GET\"],\n            response_model=ListProcessesResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes\",\n            endpoint=self.create_process,\n            methods=[\"POST\"],\n            response_model=StateSummary,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}\",\n            endpoint=self.delete_process,\n            methods=[\"DELETE\"],\n            response_model=DeleteProcessResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/programs\",\n            endpoint=self.get_programs,\n            methods=[\"GET\"],\n            response_model=typing.List[str],\n            tags=[self.name],\n        )\n\n        added_actions
+    = {}\n        for handler in [*self.actions.values().__reversed__()]:\n            handler_name
+    = handler.name\n            path = f\"/agents/{self.name}/processes/{{process_id}}/actions/{handler_name}\"\n            if
+    handler_name not in added_actions:\n                await self.add_route(app,
+    handler, path, False)\n                added_actions[handler_name] = path\n            else:\n                logger.warning(\n                    f\"Action
+    {handler_name} is already registered for path {added_actions[handler_name]}. \"\n                    f\"Skipping
+    registration for path {path}\"\n                )\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}/status\",\n            endpoint=self.get_process_info,\n            methods=[\"GET\"],\n            response_model=SyncStateResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}/events\",\n            endpoint=self.get_process_events,\n            methods=[\"GET\"],\n            response_model=typing.List[typing.Dict[str,
+    typing.Any]],\n            tags=[self.name],\n        )\n\n    async def add_route(self,
+    app, handler, path, isEndpointAProgram: bool):\n        endpoint = self.process_action(handler,
+    isEndpointAProgram)\n        app.add_api_route(\n            path,\n            endpoint=endpoint,\n            methods=[\"POST\"],\n            tags=[self.name],\n            responses={\n                200:
+    {\n                    \"model\": self.create_response_model(handler),\n                    \"content\":
+    {\"text/event-stream\": {\"schema\": {\"$ref\": \"#/components/schemas/EventTypes\"}}},\n                },\n            },\n            description=handler.description(self.agent,
+    handler),\n        )\n\n    async def stop(self, app: FastAPI):\n        pass"},
+    {"id": "01fcf0f85d19495a876ec3e5046e6b84", "file_name": "agents_logic_unit.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/agents_logic_unit.py",
+    "text": "def main():\n    if \"libedit\" in readline.__doc__:\n        readline.parse_and_bind(\"bind
+    ^I rl_complete\")\n    else:\n        readline.set_completer_delims(\" \\t\\n;\")\n        readline.parse_and_bind(\"tab:
+    complete\")\n    typer.run(create_agent)"}, {"id": "83750f23761f4cb584ca3145e5a8fcab",
+    "file_name": "simple_agent.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/simple_agent.py",
+    "text": "class AgentController:\n    name: str\n    agent: object\n    actions:
+    typing.Dict[str, FnHandler]\n\n    def __init__(self, name, agent):\n        self.name
+    = name\n        self.actions = {}\n        self.agent = agent\n        for handler
+    in get_handlers(self.agent):\n            if handler.name in self.actions:\n                self.actions[handler.name].extra[\"allowed_states\"]
+    = (\n                    *self.actions[handler.name].extra[\"allowed_states\"],\n                    *handler.extra[\"allowed_states\"],\n                )\n            else:\n                self.actions[handler.name]
+    = handler\n\n    async def start(self, app: FastAPI):\n        logger.info(f\"Starting
+    agent ''{self.name}''\")\n        app.add_api_route(\n            f\"/agents/{self.name}/processes\",\n            endpoint=self.list_processes,\n            methods=[\"GET\"],\n            response_model=ListProcessesResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes\",\n            endpoint=self.create_process,\n            methods=[\"POST\"],\n            response_model=StateSummary,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}\",\n            endpoint=self.delete_process,\n            methods=[\"DELETE\"],\n            response_model=DeleteProcessResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/programs\",\n            endpoint=self.get_programs,\n            methods=[\"GET\"],\n            response_model=typing.List[str],\n            tags=[self.name],\n        )\n\n        added_actions
+    = {}\n        for handler in [*self.actions.values().__reversed__()]:\n            handler_name
+    = handler.name\n            path = f\"/agents/{self.name}/processes/{{process_id}}/actions/{handler_name}\"\n            if
+    handler_name not in added_actions:\n                await self.add_route(app,
+    handler, path, False)\n                added_actions[handler_name] = path\n            else:\n                logger.warning(\n                    f\"Action
+    {handler_name} is already registered for path {added_actions[handler_name]}. \"\n                    f\"Skipping
+    registration for path {path}\"\n                )\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}/status\",\n            endpoint=self.get_process_info,\n            methods=[\"GET\"],\n            response_model=SyncStateResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}/events\",\n            endpoint=self.get_process_events,\n            methods=[\"GET\"],\n            response_model=typing.List[typing.Dict[str,
+    typing.Any]],\n            tags=[self.name],\n        )\n\n    async def add_route(self,
+    app, handler, path, isEndpointAProgram: bool):\n        endpoint = self.process_action(handler,
+    isEndpointAProgram)\n        app.add_api_route(\n            path,\n            endpoint=endpoint,\n            methods=[\"POST\"],\n            tags=[self.name],\n            responses={\n                200:
+    {\n                    \"model\": self.create_response_model(handler),\n                    \"content\":
+    {\"text/event-stream\": {\"schema\": {\"$ref\": \"#/components/schemas/EventTypes\"}}},\n                },\n            },\n            description=handler.description(self.agent,
+    handler),\n        )\n\n    async def stop(self, app: FastAPI):\n        pass"},
+    {"id": "ea011530dd974ef6bfcca1a5a2bbc6e0", "file_name": "agent_creator.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/bin/agent_creator.py",
+    "text": "def main():\n    if \"libedit\" in readline.__doc__:\n        readline.parse_and_bind(\"bind
+    ^I rl_complete\")\n    else:\n        readline.set_completer_delims(\" \\t\\n;\")\n        readline.parse_and_bind(\"tab:
+    complete\")\n    typer.run(create_agent)"}, {"id": "6b4eea7b092d450caeb0fbb863feea73",
+    "file_name": "generic_agent.py", "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/generic_agent.py",
+    "text": "class AgentController:\n    name: str\n    agent: object\n    actions:
+    typing.Dict[str, FnHandler]\n\n    def __init__(self, name, agent):\n        self.name
+    = name\n        self.actions = {}\n        self.agent = agent\n        for handler
+    in get_handlers(self.agent):\n            if handler.name in self.actions:\n                self.actions[handler.name].extra[\"allowed_states\"]
+    = (\n                    *self.actions[handler.name].extra[\"allowed_states\"],\n                    *handler.extra[\"allowed_states\"],\n                )\n            else:\n                self.actions[handler.name]
+    = handler\n\n    async def start(self, app: FastAPI):\n        logger.info(f\"Starting
+    agent ''{self.name}''\")\n        app.add_api_route(\n            f\"/agents/{self.name}/processes\",\n            endpoint=self.list_processes,\n            methods=[\"GET\"],\n            response_model=ListProcessesResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes\",\n            endpoint=self.create_process,\n            methods=[\"POST\"],\n            response_model=StateSummary,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}\",\n            endpoint=self.delete_process,\n            methods=[\"DELETE\"],\n            response_model=DeleteProcessResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/programs\",\n            endpoint=self.get_programs,\n            methods=[\"GET\"],\n            response_model=typing.List[str],\n            tags=[self.name],\n        )\n\n        added_actions
+    = {}\n        for handler in [*self.actions.values().__reversed__()]:\n            handler_name
+    = handler.name\n            path = f\"/agents/{self.name}/processes/{{process_id}}/actions/{handler_name}\"\n            if
+    handler_name not in added_actions:\n                await self.add_route(app,
+    handler, path, False)\n                added_actions[handler_name] = path\n            else:\n                logger.warning(\n                    f\"Action
+    {handler_name} is already registered for path {added_actions[handler_name]}. \"\n                    f\"Skipping
+    registration for path {path}\"\n                )\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}/status\",\n            endpoint=self.get_process_info,\n            methods=[\"GET\"],\n            response_model=SyncStateResponse,\n            tags=[self.name],\n        )\n\n        app.add_api_route(\n            f\"/agents/{self.name}/processes/{{process_id}}/events\",\n            endpoint=self.get_process_events,\n            methods=[\"GET\"],\n            response_model=typing.List[typing.Dict[str,
+    typing.Any]],\n            tags=[self.name],\n        )\n\n    async def add_route(self,
+    app, handler, path, isEndpointAProgram: bool):\n        endpoint = self.process_action(handler,
+    isEndpointAProgram)\n        app.add_api_route(\n            path,\n            endpoint=endpoint,\n            methods=[\"POST\"],\n            tags=[self.name],\n            responses={\n                200:
+    {\n                    \"model\": self.create_response_model(handler),\n                    \"content\":
+    {\"text/event-stream\": {\"schema\": {\"$ref\": \"#/components/schemas/EventTypes\"}}},\n                },\n            },\n            description=handler.description(self.agent,
+    handler),\n        )\n\n    async def stop(self, app: FastAPI):\n        pass"},
+    {"id": "031722b169bd454f8300d8d03b1363ab", "file_name": "agent_creator.py", "file_path":
+    "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/bin/agent_creator.py",
+    "text": "def create_agent():\n    agents = [a for a in agent_resources.keys()
+    if a != \"Agent\"] + [\"Custom\"]\n\n    name = prompt(\"What is the name of the
+    agent?\", default=\"NewAgent\")\n    kind = prompt(f\"What type of agent is {name}?\",
+    default=\"GenericAgent\", choices=agents)\n    args = dict(apiVersion=\"eidolon/v1\")\n    args[\"kind\"]
+    = kind if kind != \"Custom\" else \"Agent\"\n\n    # todo, This is just a reference,
+    so we don''t need the duplicate logic here\n    if kind == \"Custom\":\n        agent_resource
+    = AgentResource\n        fqn_ = prompt_with_completer(\n            \"What is
+    the fully qualified name to the implementation?\", fqn_completer, value_proc=impl_proc\n        )\n        agent_class
+    = for_name(fqn_, object)\n        args[\"implementation\"] = fqn_\n    else:\n        agent_resource
+    = agent_resources[kind]\n        agent_class = agent_resource.clazz\n\n    spec_type
+    = Reference.get_spec_type(agent_class)\n    if spec_type:\n        if confirm(\"Would
+    you like to modify the spec?\", default=False):\n            try:\n                with
+    indented():\n                    args[\"spec\"] = build_model(spec_type)\n            except
+    Abort:\n                echo(\"Aborted, leaving spec blank\")\n    else:\n        echo(f\"{agent_class.__name__}
+    does not have a spec.\")\n\n    try:\n        raw_edit_loop(args, agent_resource)\n        richprint(Syntax(yaml.safe_dump(args),
+    \"yaml\", padding=Indenter.depth * 2))\n        save_loc = prompt(\"Where do you
+    want to save the resource?\", default=f\"{name}.yaml\")\n        with open(save_loc,
+    \"w\") as file:\n            yaml.dump(args, file)\n    except Abort:\n        echo(\"Aborted.\",
+    color=\"red\")"}, {"id": "7912712a8d8a46c2a3d50c8cab52d62a", "file_name": "agent_machine.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_machine.py",
+    "text": "def create_agent():\n    agents = [a for a in agent_resources.keys()
+    if a != \"Agent\"] + [\"Custom\"]\n\n    name = prompt(\"What is the name of the
+    agent?\", default=\"NewAgent\")\n    kind = prompt(f\"What type of agent is {name}?\",
+    default=\"GenericAgent\", choices=agents)\n    args = dict(apiVersion=\"eidolon/v1\")\n    args[\"kind\"]
+    = kind if kind != \"Custom\" else \"Agent\"\n\n    # todo, This is just a reference,
+    so we don''t need the duplicate logic here\n    if kind == \"Custom\":\n        agent_resource
+    = AgentResource\n        fqn_ = prompt_with_completer(\n            \"What is
+    the fully qualified name to the implementation?\", fqn_completer, value_proc=impl_proc\n        )\n        agent_class
+    = for_name(fqn_, object)\n        args[\"implementation\"] = fqn_\n    else:\n        agent_resource
+    = agent_resources[kind]\n        agent_class = agent_resource.clazz\n\n    spec_type
+    = Reference.get_spec_type(agent_class)\n    if spec_type:\n        if confirm(\"Would
+    you like to modify the spec?\", default=False):\n            try:\n                with
+    indented():\n                    args[\"spec\"] = build_model(spec_type)\n            except
+    Abort:\n                echo(\"Aborted, leaving spec blank\")\n    else:\n        echo(f\"{agent_class.__name__}
+    does not have a spec.\")\n\n    try:\n        raw_edit_loop(args, agent_resource)\n        richprint(Syntax(yaml.safe_dump(args),
+    \"yaml\", padding=Indenter.depth * 2))\n        save_loc = prompt(\"Where do you
+    want to save the resource?\", default=f\"{name}.yaml\")\n        with open(save_loc,
+    \"w\") as file:\n            yaml.dump(args, file)\n    except Abort:\n        echo(\"Aborted.\",
+    color=\"red\")"}, {"id": "5611b1360f384c9c896e000ba3611d9c", "file_name": "simple_agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/simple_agent.py",
+    "text": "def create_agent():\n    agents = [a for a in agent_resources.keys()
+    if a != \"Agent\"] + [\"Custom\"]\n\n    name = prompt(\"What is the name of the
+    agent?\", default=\"NewAgent\")\n    kind = prompt(f\"What type of agent is {name}?\",
+    default=\"GenericAgent\", choices=agents)\n    args = dict(apiVersion=\"eidolon/v1\")\n    args[\"kind\"]
+    = kind if kind != \"Custom\" else \"Agent\"\n\n    # todo, This is just a reference,
+    so we don''t need the duplicate logic here\n    if kind == \"Custom\":\n        agent_resource
+    = AgentResource\n        fqn_ = prompt_with_completer(\n            \"What is
+    the fully qualified name to the implementation?\", fqn_completer, value_proc=impl_proc\n        )\n        agent_class
+    = for_name(fqn_, object)\n        args[\"implementation\"] = fqn_\n    else:\n        agent_resource
+    = agent_resources[kind]\n        agent_class = agent_resource.clazz\n\n    spec_type
+    = Reference.get_spec_type(agent_class)\n    if spec_type:\n        if confirm(\"Would
+    you like to modify the spec?\", default=False):\n            try:\n                with
+    indented():\n                    args[\"spec\"] = build_model(spec_type)\n            except
+    Abort:\n                echo(\"Aborted, leaving spec blank\")\n    else:\n        echo(f\"{agent_class.__name__}
+    does not have a spec.\")\n\n    try:\n        raw_edit_loop(args, agent_resource)\n        richprint(Syntax(yaml.safe_dump(args),
+    \"yaml\", padding=Indenter.depth * 2))\n        save_loc = prompt(\"Where do you
+    want to save the resource?\", default=f\"{name}.yaml\")\n        with open(save_loc,
+    \"w\") as file:\n            yaml.dump(args, file)\n    except Abort:\n        echo(\"Aborted.\",
+    color=\"red\")"}, {"id": "f9206228b2224d10a21b3bbfb9dd3b95", "file_name": "agent_controller.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_controller.py",
+    "text": "class LogicUnit(ProcessingUnit, ABC):\n    async def build_tools(self,
+    call_context: CallContext) -> List[FnHandler]:\n        handlers = get_handlers(self)\n        for
+    handler in handlers:\n            handler.extra[\"title\"] = self.__class__.__name__\n            handler.extra[\"sub_title\"]
+    = handler.fn.__name__\n            handler.extra[\"agent_call\"] = False\n\n            return
+    handlers"}, {"id": "0175a3d0a7be4e14b74d61e503dba991", "file_name": "agent_machine.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/system/agent_machine.py",
+    "text": "from contextlib import contextmanager\nfrom fastapi import FastAPI\nfrom
+    pydantic import BaseModel, Field\nfrom typing import List, Optional\n\nfrom eidolon_ai_sdk.memory.agent_memory
+    import AgentMemory\nfrom .agent_controller import AgentController\nfrom .reference_model
+    import AnnotatedReference, Specable\nfrom .resources.agent_resource import AgentResource\nfrom
+    .resources.resources_base import Resource\nfrom ..agent_os import AgentOS\nfrom
+    ..memory.file_memory import FileMemory\nfrom ..memory.semantic_memory import SymbolicMemory\nfrom
+    ..memory.similarity_memory import SimilarityMemory\nfrom ..security.security_manager
+    import SecurityManager\n\n\n# Code for: class MachineSpec(BaseModel):\n\n\n# Code
+    for: class AgentMachine(Specable[MachineSpec]):\n\n\n@contextmanager\n# Code for:
+    def error_logger(filename: str = None):\n\n\n# Code for: def _error_wrapper(resource:
+    Resource):"}, {"id": "5c6efe076ed24492b3e38e08bdb2dc52", "file_name": "agent.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/agent/agent.py",
+    "text": "class LogicUnit(ProcessingUnit, ABC):\n    async def build_tools(self,
+    call_context: CallContext) -> List[FnHandler]:\n        handlers = get_handlers(self)\n        for
+    handler in handlers:\n            handler.extra[\"title\"] = self.__class__.__name__\n            handler.extra[\"sub_title\"]
+    = handler.fn.__name__\n            handler.extra[\"agent_call\"] = False\n\n            return
+    handlers"}, {"id": "f427064caead4f298875b5a0346b8267", "file_name": "logic_unit.py",
+    "file_path": "/home/pjanowski/code/eidolon/examples/../sdk/eidolon_ai_sdk/cpu/logic_unit.py",
+    "text": "from contextlib import contextmanager\nfrom fastapi import FastAPI\nfrom
+    pydantic import BaseModel, Field\nfrom typing import List, Optional\n\nfrom eidolon_ai_sdk.memory.agent_memory
+    import AgentMemory\nfrom .agent_controller import AgentController\nfrom .reference_model
+    import AnnotatedReference, Specable\nfrom .resources.agent_resource import AgentResource\nfrom
+    .resources.resources_base import Resource\nfrom ..agent_os import AgentOS\nfrom
+    ..memory.file_memory import FileMemory\nfrom ..memory.semantic_memory import SymbolicMemory\nfrom
+    ..memory.similarity_memory import SimilarityMemory\nfrom ..security.security_manager
+    import SecurityManager\n\n\n# Code for: class MachineSpec(BaseModel):\n\n\n# Code
+    for: class AgentMachine(Specable[MachineSpec]):\n\n\n@contextmanager\n# Code for:
+    def error_logger(filename: str = None):\n\n\n# Code for: def _error_wrapper(resource:
+    Resource):"}]'
+  role: tool
+  tool_call_id: call_RWHJZTjuqXNFGG95vg0SOErl
+model: gpt-4-turbo-preview
+stream: true
+temperature: 0.3
+tools:
+- function:
+    description: Searches for code snippets in the source code
+    name: AgentsLogicUnit_convo_SearchCode_search
+    parameters:
+      $defs:
+        Input_BodyModel:
+          properties:
+            question:
+              description: The question to search for
+              title: Question
+              type: string
+          required:
+          - question
+          title: Input_BodyModel
+          type: object
+      properties:
+        body:
+          allOf:
+          - $ref: '#/$defs/Input_BodyModel'
+          default: null
+      title: Input
+      type: object
+  type: function
+- function:
+    description: "List the files in the document store.\n        :return: The response\
+      \ from the cpu"
+    name: AgentsLogicUnit_convo_SearchCode_list_files
+    parameters:
+      $defs:
+        Input_BodyModel:
+          properties: {}
+          title: Input_BodyModel
+          type: object
+      properties:
+        body:
+          allOf:
+          - $ref: '#/$defs/Input_BodyModel'
+          default: null
+      title: Input
+      type: object
+  type: function
+- function:
+    description: Searches for snippets in the documentation
+    name: AgentsLogicUnit_convo_SearchDocs_search
+    parameters:
+      $defs:
+        Input_BodyModel:
+          properties:
+            question:
+              description: The question to search for
+              title: Question
+              type: string
+          required:
+          - question
+          title: Input_BodyModel
+          type: object
+      properties:
+        body:
+          allOf:
+          - $ref: '#/$defs/Input_BodyModel'
+          default: null
+      title: Input
+      type: object
+  type: function
+- function:
+    description: "List the files in the document store.\n        :return: The response\
+      \ from the cpu"
+    name: AgentsLogicUnit_convo_SearchDocs_list_files
+    parameters:
+      $defs:
+        Input_BodyModel:
+          properties: {}
+          title: Input_BodyModel
+          type: object
+      properties:
+        body:
+          allOf:
+          - $ref: '#/$defs/Input_BodyModel'
+          default: null
+      title: Input
+      type: object
+  type: function
