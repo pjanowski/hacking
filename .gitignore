@@ -162,3 +162,4 @@ cython_debug/
 opdf_index/
 arxiv_test_index/
 .vscode/
+mistral-7b-instruct-v0.1.Q2_K.gguf
